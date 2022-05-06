@@ -1,0 +1,219 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "智驾数据服务平台",
+				"enablePullDownRefresh": false,
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/login/login",
+			"style" :                                                                                    
+			{
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false,
+					"navigationStyle":"custom"
+			}
+		},
+			// {
+			// 	"path" : "pages/tabs/tab-home/tab-home",
+			// 	"style" : {
+			// 		"navigationBarTitleText": "智驾数据服务平台",
+			// 		"enablePullDownRefresh": false
+			// 	}
+			// },
+		{
+			"path" : "pages/tabs/tab-workbench/tab-workbench",
+			"style" : {
+				"navigationBarTitleText": "智驾数据服务平台",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/tabs/tab-personal/tab-personal",
+			"style" : {
+				"navigationBarTitleText": "智驾数据服务平台",
+				"enablePullDownRefresh": false,
+					"navigationStyle":"custom"
+			}
+		}
+	],
+	"subPackages":[
+		{
+			"root": "page_testCarManage", // 车辆管理
+			"pages":[
+				{
+					"path" : "carInfoManage/carInfoManage",
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "车辆信息管理", 
+						"enablePullDownRefresh": false
+					}
+				}
+			]
+		},
+		{
+			"root": "page_testCarOverview", // 测试车总览
+			"pages":[
+				{
+					"path" : "testCarOverview/testCarOverview",
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "测试车总览", 
+						"enablePullDownRefresh": false
+					}
+				}
+			]
+		},
+		{
+			"root": "page_carBorrow", // 借车
+			"pages":[
+				{
+					"path" : "borrowCar/borrowCar",
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "借车", 
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path" : "borrowCar/borrowFormCom/borrowFormCom", // 预约表单
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "预约用车",
+						"enablePullDownRefresh": false
+					}
+				}
+			]
+		},
+		{
+			"root": "page_myApplycation", // 我的申请
+			"pages":[
+				{
+					"path" : "myApplication",
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "我的申请", 
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path" : "subPages/carBorrowApplication/carBorrowOrderList/carBorrowOrderList", // 我的借车申请
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "我的借车申请",
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path" : "subPages/carBorrowApplication/carBorrowOrderDetail/carBorrowOrderDetail", // 借车申请订单详情
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "借车申请订单详情",
+						"enablePullDownRefresh": false
+					}
+				}
+			]
+		},
+		{
+			"root": "page_myVerify", // 我的审核
+			"pages":[
+				{
+					"path" : "myVerify",
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "我的审核", 
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path" : "subPages/carBorrowVerify/carBorrowVerifyList/carBorrowVerifyList", // 我的借车审核
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "我的借车审核",
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path" : "subPages/carBorrowVerify/carBorrowVerifyDetail/carBorrowVerifyDetail", // 借车审核订单详情
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "借车审核订单详情",
+						"enablePullDownRefresh": false
+					}
+				}
+			]
+		},
+		{
+			"root": "page_unbindDevice", // 设备解绑
+			"pages":[
+				{
+					"path" : "unbindDevice",
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "设备解绑", 
+						"enablePullDownRefresh": false
+					}
+				}
+			]
+		}
+	],
+	"preloadRule": {
+		"page_myApplycation/myApplication": {
+			"network": "all",
+			"packages": ["page_myApplycation"]
+		},
+		"page_myVerify/myVerify": {
+			"network": "all",
+			"packages": ["page_myVerify"]
+		}
+	},
+	// "lazyCodeLoading": "requiredComponents",
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "智驾数据服务平台",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#ffffff" //#ffffff #F8F8F8
+	},
+	"easycom": {
+	  "autoscan": true,
+	  "custom": {
+	    "^com-(.*)": "@/components/com-$1.vue" // 匹配components目录内的vue文件
+	  }
+	},
+	"tabBar": {
+		"color": "#7d7c80",
+		"selectedColor": "#5161d5", // #5161d5 #664dd1
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+		// 	{
+		// 		"pagePath": "pages/tabs/tab-home/tab-home",
+		// 		"iconPath": "static/image/tab/home.png",
+		// 		"selectedIconPath": "static/image/tab/home1.png",
+		// 		"text": "首页"
+		// },
+		{
+				"pagePath": "pages/tabs/tab-workbench/tab-workbench",
+				"iconPath": "static/image/tab/workbench.png",
+				"selectedIconPath": "static/image/tab/workbench1.png",
+				"text": "工作台"
+		},
+		{
+			"pagePath": "pages/tabs/tab-personal/tab-personal",
+			"iconPath": "static/image/tab/user.png",
+			"selectedIconPath": "static/image/tab/user1.png",
+			"text": "我的"
+		}]
+	},
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
+		}
+		// ,"scope.userLocationBackground": {
+		// 	"desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位,切换到后台也可以访问
+		// }
+	}
+}

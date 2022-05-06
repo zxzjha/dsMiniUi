@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "智驾数据服务平台",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "智驾数据服务平台",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {}
+}

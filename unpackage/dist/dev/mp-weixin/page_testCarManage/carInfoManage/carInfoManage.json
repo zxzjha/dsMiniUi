@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "车辆信息管理",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "com-hoc-dropdown-menu": "/components/com-hoc-dropdown-menu",
+    "u--input": "/uni_modules/uview-ui/components/u--input/u--input",
+    "com-hoc-list": "/components/com-hoc-list",
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
+    "car-info-item": "/page_testCarManage/carInfoManage/components/carInfoItem",
+    "car-info-edit-com": "/page_testCarManage/carInfoManage/components/carInfoEditCom"
+  }
+}

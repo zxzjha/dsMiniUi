@@ -1,0 +1,129 @@
+@charset "UTF-8";
+/* uni.scss */
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.page-car-info-item.data-v-3266f504 {
+  margin: 30rpx 0;
+  overflow: hidden;
+}
+.page-car-info-item .title--box.data-v-3266f504 {
+  display: flex;
+  align-items: center;
+  min-height: 100rpx;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: border-radius 0.6s ease-out;
+}
+.page-car-info-item .title--box .item-left.data-v-3266f504 {
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+  width: 55rpx;
+  height: 55rpx;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.6s ease-out;
+}
+.page-car-info-item .title--box .item-center.data-v-3266f504 {
+  flex: 1;
+  padding: 20rpx 0;
+}
+.page-car-info-item .title--box .item-center .item-center-title.data-v-3266f504 {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.page-car-info-item .title--box .item-center .item-center-content.data-v-3266f504 {
+  display: flex;
+  padding: 12rpx 0 0 30rpx;
+  font-size: 20rpx;
+  color: #797979;
+}
+.page-car-info-item .title--box .item-center .item-center-content .item.data-v-3266f504 {
+  margin-right: 20rpx;
+  padding: 4rpx 20rpx;
+  border-radius: 30rpx;
+  background-color: #e4e4e4;
+}
+.page-car-info-item .title--box .item-right.data-v-3266f504 {
+  margin-left: 20rpx;
+  margin-right: 36rpx;
+}
+.page-car-info-item .content-box.data-v-3266f504 {
+  font-size: 24rpx;
+  transition: all 0.6s ease-out;
+  overflow: auto;
+}
+.page-car-info-item .content-box .content-line.data-v-3266f504 {
+  display: flex;
+  margin-bottom: 10rpx;
+}
+.page-car-info-item .content-box .content-line .content-lable-item.data-v-3266f504 {
+  min-width: 220rpx;
+}
+.collape-open .title--box.data-v-3266f504 {
+  background-color: #93a1ff;
+  border-radius: 36rpx 36rpx 0 0;
+}
+.collape-open .content-box.data-v-3266f504 {
+  height: 330rpx;
+  max-height: 330rpx;
+  margin: 0 0;
+  padding: 20rpx 30rpx;
+  border-radius: 0 0 36rpx 36rpx;
+}
+.collape-open .blue-theme-title.data-v-3266f504 {
+  background-color: #93a1ff;
+}
+.collape-open .blue-theme-title .item-left.data-v-3266f504 {
+  background-color: #746cef;
+}
+.collape-open .grey-theme-title.data-v-3266f504 {
+  background-color: #a7a7a7;
+}
+.collape-open .blue-theme-content.data-v-3266f504 {
+  color: #6770b3;
+  background-color: #ccd3ff;
+}
+.collape-open .grey-theme-content.data-v-3266f504 {
+  color: #676767;
+  background-color: #e4e4e4;
+}
+.collape-close .title--box.data-v-3266f504 {
+  border-radius: 72rpx;
+  background-color: #7F8FFF;
+}
+.collape-close .content-box.data-v-3266f504 {
+  height: 0;
+  max-height: 0;
+  margin: 0 60rpx;
+}
+.collape-close .blue-theme-title.data-v-3266f504 {
+  background-color: #7F8FFF;
+}
+.collape-close .grey-theme-title.data-v-3266f504 {
+  background-color: #909090;
+}
+

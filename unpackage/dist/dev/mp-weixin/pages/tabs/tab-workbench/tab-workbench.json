@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "智驾数据服务平台",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "com-hoc-dropdown-menu": "/components/com-hoc-dropdown-menu"
+  }
+}

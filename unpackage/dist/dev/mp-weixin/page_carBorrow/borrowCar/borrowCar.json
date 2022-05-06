@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "借车",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "u--input": "/uni_modules/uview-ui/components/u--input/u--input",
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
+    "com-caritem": "/components/com-caritem",
+    "u-loadmore": "/uni_modules/uview-ui/components/u-loadmore/u-loadmore",
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty"
+  }
+}
