@@ -4,7 +4,7 @@
 			<view class="search-box">
 				<view class="dropdown-box">
 					<com-hoc-dropdown-menu :listData="projectList" :initValue.sync="chosedProject" title="请选择项目" labelKey="project" 
-						valueKey="project" @getChosedValues="getChosedValues"
+						valueKey="project" descKey="project" @getChosedValues="getChosedValues"
 					></com-hoc-dropdown-menu>
 				</view>
 				<view class="input-box">
@@ -16,11 +16,13 @@
 			</view>
 		</view>
 		<view class="content-wrapper">
-			<com-hoc-list ref="listcom" :tData.sync="tableData" :extraParams="extraParams" inquireName="getVehicleInfoList" scrollBoxHeight="90vh">
+			<com-hoc-list ref="listcom" :tData.sync="tableData" :extraParams="extraParams" 
+				inquireName="getVehicleInfoList" scrollBoxHeight="90vh" @getListData="getListData"
+			>
 				<template v-slot:content>
 					<view class="list-wrapper">
 						<view v-for="(item,index) in tableData" :id="item.id" :key="item.id">
-							<car-info-item :initialData="item" :itemId="index+1" :key="item.id"></car-info-item>
+							<car-info-item :initialData="item" :itemId="index+1" :key="item.id" @edit="onEdit"></car-info-item>
 						</view>
 					</view>
 				</template>
@@ -34,19 +36,20 @@
 			</movable-area>
 		</view>
 		
-		<u-modal :show="isModalShow" :showConfirmButton="false" :closeOnClickOverlay="true"
-			title="添加车辆" @close="onModalClose"
+		<u-modal v-if="isModalShow" :show="isModalShow" :showConfirmButton="false" :closeOnClickOverlay="true"
+			:title="formTitle" @close="onModalClose"
 		>
 			<view class="car-info-modal-wrapper">
-				<car-info-edit-com :initialData="curFormData"></car-info-edit-com>
+				<car-info-edit-com :initialData="curFormData" @refreshCarinfoList="onSearch" @closeFormModal="closeFormModal"></car-info-edit-com>
 			</view>
 		</u-modal>
 	</view>
 </template>
 
 <script>
+	import apiLib from '@/api/api.js'
 	import {mapState} from 'vuex'
-	import {debounce} from '@/lib/lib.js'
+	import {debounce,isNil,deepClone,treeToList} from '@/lib/lib.js'
 	import carInfoItem from './components/carInfoItem.vue'
 	import carInfoEditCom from './components/carInfoEditCom.vue'
 	
@@ -59,7 +62,16 @@
 		computed: {
 			...mapState({
 				projectList: state => state.baseStore.projectList,
+				departmentList: state => state.baseStore.departmentList,
+				userList: state => state.baseStore.userList,
+				departUserList: state => state.baseStore.departUserList
 			})
+		},
+		mounted() {
+			const isNeedUpdate =(val)=> isNil(val) || (val && val.length<1)
+			isNeedUpdate(this.departmentList) && this.getDepartList()
+			isNeedUpdate(this.userList) && this.getUserList()
+			isNeedUpdate(this.departUserList) && this.getDepartUserList()
 		},
 		data(){
 			return {
@@ -67,6 +79,7 @@
 				chosedProject:[], // 所选择的项目
 				isModalShow:false,// 车辆信息表单弹窗
 				curFormData:{}, // 当前表单初始数据
+				formTitle:'添加车辆',
 				extraParams:{
 					searchText:'', // 搜索内容
 					project:'' // 项目
@@ -86,9 +99,14 @@
 				this.extraParams.searchText = chosedArr.join(',')
 			},
 			onAdd(){ // 打开弹窗，添加车辆
+				this.formTitle = '添加车辆'
 				this.curFormData = {}
 				this.isModalShow = true
-				console.log('onAdd')
+			},
+			onEdit(form){ // 打开弹窗，编辑车辆
+				this.formTitle = '编辑车辆'
+				this.curFormData = {...form}
+				this.isModalShow = true
 			},
 			closeFormModal(){
 				this.isModalShow = false
@@ -100,11 +118,32 @@
 				this.moveObj.x = e.detail.x
 				this.moveObj.y = e.detail.y
 			},
-			calcProjectList(){
-				const res = this.projectList.map(i=>({
-					label:i.project,
-					value:i.project
-				}))
+			getListData(data){ // 获取组件com-hoc-list传过来的tableData
+				console.log(data,'getListDatagetListDatagetListDatagetListData')
+			},
+			async getDepartList(){ // 获取部门列表
+				const res = await apiLib.getDepartmentList()
+				this.$store.dispatch('baseStore/updateDepartmentList',res)
+			},
+			async getUserList(){ // 获取用户列表
+				const res = await apiLib.getUserList()
+				this.$store.dispatch('baseStore/updateUserList',res)
+			},
+			async getDepartUserList(){  // 计算用户部门混合列表
+				const departList = treeToList(deepClone(this.departmentList))
+				departList.forEach(i=>{
+					i.children = []
+					i.acount = i.name
+					i.isUser = false
+				});
+				
+				this.userList.forEach(user=>{
+					const item = departList.find(depart=>depart.id==user.departmentId)
+					item && item.children.push(user)
+				})
+				
+				const hasUserDepart = departList.filter(i=>i.children && i.children.length>0)
+				this.$store.dispatch('baseStore/updateDepartUserList',hasUserDepart)
 			}
 		}
 	}

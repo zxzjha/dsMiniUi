@@ -27,12 +27,12 @@
 /* 文章场景相关 */
 .com-hoc-dropdown-menu.data-v-3a3df15a {
   position: relative;
-  font-size: 24rpx;
 }
 .com-hoc-dropdown-menu .dropdown-title-box.data-v-3a3df15a {
   display: flex;
   align-items: center;
   background-color: var(--backgroundColor);
+  font-size: var(--fontSize);
 }
 .com-hoc-dropdown-menu .dropdown-title-box .title-content.data-v-3a3df15a {
   overflow: hidden;
@@ -51,6 +51,8 @@
 }
 .com-hoc-dropdown-menu .title-input-box .text-line.data-v-3a3df15a {
   color: #303133;
+  background-color: var(--backgroundColor);
+  font-size: var(--fontSize);
 }
 .com-hoc-dropdown-menu .content-wrapper.data-v-3a3df15a {
   width: 100%;

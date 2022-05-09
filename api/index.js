@@ -1,4 +1,4 @@
-import store from "../store/index.js"
+import store from '@/store/index.js'  //引入vuex
 import {isNotNil} from '@/lib/lib.js'
 
 export class Request {

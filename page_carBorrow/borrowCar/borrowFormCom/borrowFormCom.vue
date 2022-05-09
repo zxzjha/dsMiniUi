@@ -71,7 +71,7 @@
 				timePickerShow:false,
 				curTimePickerValName:'', // 当前选择时间字段
 				isBtnLoading:false,
-				rules:{
+				rules:{ // 校验规则
 					'startTimeDate':[
 						{
 							required: true,
@@ -128,7 +128,7 @@
 						message: '请输入供应商',
 						trigger: ['blur', 'change']
 					}
-				}, // 校验规则
+				},
 				eventChannel:null,
 			}
 		},

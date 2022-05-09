@@ -1,4 +1,5 @@
 import { exFetch,exFetchWithoutToken } from "../index.js"
+import {listToTree,deepClone, isNotNil} from '@/lib/lib.js'
 
 const BaseUrl = 'https://api-njdm-pv.saicmotor.com/adcdataplat'
 
@@ -68,6 +69,47 @@ export const searchUserListOx = async (params = {}) => { // 根据关
   }
 }
 
+export const getUserList = async(params = {},type)=>{ // 获取用户列表
+  try {
+    const res = await exFetch(`${BaseUrl}/sys/sys-management/getUserList/`, params, 'GET')
+		const {data={}} = res
+		const list = data.itemList || []
+		const userList = list && list.map(item=>{
+			return {
+				...item,
+				isActiveDesc:isNotNil(item.isActive)?(item.isActive?'启用':'禁用'):'',
+				acount:item.acount,
+				name:item.trueName,
+				departmentId:item.department.id,
+				departmentName:item.department.name,
+				isUser:true
+			}
+		})
+    return userList
+  } catch (err) {
+    return []
+  }
+}
+
+export const getDepartmentList = async(params = {},type='tree')=>{ // 获取部门列表type:tree--树状列表,list--列表
+  try {
+    const res = await exFetch(`${BaseUrl}/sys/sys-management/getDepartmentList/`, params, 'GET')
+		const {data={}} = res
+		const departList = data.itemList || []
+		departList && departList.forEach(item=>{
+			item.pid = item.id==item.parent?0:item.parent 
+		})
+		
+		let tree = []
+		if(type=='tree'){
+			const list = deepClone(departList)
+			tree = listToTree(list,'id','pid')
+		}
+    return type=='tree'?tree:departList
+  }catch(err){
+    return []
+  }
+}
 
 
 

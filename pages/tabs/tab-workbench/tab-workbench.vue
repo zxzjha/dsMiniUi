@@ -6,12 +6,6 @@
 				<view class="icon-title">{{item.title}}</view>
 			</view>
 		</view>
-		
-		<view>
-			<com-hoc-dropdown-menu :isAbleSearch="true" axiosRequestApiName="searchUserListOx" 
-				:listData.synnc="listData" labelKey="describeText" valueKey="id"
-			></com-hoc-dropdown-menu>
-		</view>
 	</view>
 </template>
 
@@ -24,12 +18,6 @@
 	export default {
 		data() {
 			return {
-				listData:[],
-				
-				
-				
-				
-				
 				list:[],
 				share:{
 					title:'智驾数据服务平台',

@@ -109,6 +109,7 @@ export const getVehicleProject = async (params = {},type='get') => { /
 export const getVehicleInfoList = async (params = {}, type = 'GET') => { // 获取车辆信息列表(get)
   try {
 		const res = await exFetch(calcUrl(params, type, 'vehicle-info'), params, type)
+		
 		if (res.code === 200) {
       res.data && res.data.itemList && res.data.itemList.forEach(item => { 
         item.ownerId = item.owner.id
@@ -126,5 +127,16 @@ export const getVehicleInfoList = async (params = {}, type = 'GET') =
     return {
       isOk:false
     }
+  }
+}
+
+export const updateVehicleInfoList = async (params = {}, type = 'GET', isExFetch = false,errException={ ...exceptionTemp }) => { // 新增/编辑车辆信息(post)
+  const url = calcUrl(params, type, 'vehicle-info')
+  try {
+    const res = await exFetch(url, params, type,errException)
+		res.isOk = true
+    return res
+  } catch (err) {
+    return {isOk:false}
   }
 }

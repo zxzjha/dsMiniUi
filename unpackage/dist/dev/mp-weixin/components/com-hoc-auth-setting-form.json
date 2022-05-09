@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u--form": "/uni_modules/uview-ui/components/u--form/u--form",
+    "u-form-item": "/uni_modules/uview-ui/components/u-form-item/u-form-item",
+    "u-switch": "/uni_modules/uview-ui/components/u-switch/u-switch",
+    "com-hoc-tree": "/components/com-hoc-tree",
+    "u-button": "/uni_modules/uview-ui/components/u-button/u-button"
+  }
+}

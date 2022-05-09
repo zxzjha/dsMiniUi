@@ -2,22 +2,23 @@
 	<view class="com-hoc-dropdown-menu">
 		<template v-if="!isAbleSearch">
 			<view class="dropdown-title-box" @click="collapseMenu" :style="titleStyle">
-				<view class="title-content">{{titleContent}}</view>
-				<view :class="['arrow-item',isMenuOpen?'arrow-rotate':'']">
-					<u-icon name="arrow-down-fill"></u-icon>
+				<view class="title-content" :style="{color:titleContent===title?titleColor.nochoseColor: titleColor.chosedColor}">{{titleContent}}</view>
+				<view v-if="iconShow" :class="['arrow-item',isMenuOpen?'arrow-rotate':'']">
+					<u-icon name="arrow-down-fill" :color="titleContent===title?titleColor.nochoseColor: titleColor.chosedColor"></u-icon>
 				</view>
 			</view>
 		</template>
 		
 		<template v-if="isAbleSearch">
 			<view class="title-input-box">
-				<u--input v-if="isMenuOpen" v-model="searchText" clearable border="none" :placeholder="searchTitleContent"
-					customStyle="box-sizing: border-box" @focus="onFocus" @change="onTextChageDebounce"
+				<u--input ref="searchinput" v-if="isMenuOpen" v-model="searchText" :focus="true" clearable border="none" :placeholder="searchTitleContent"
+					customStyle="box-sizing: border-box" @focus="onFocus" @blur="onBlur" @change="onTextChageDebounce"
 				></u--input>
-				<view class="text-line" v-else @click="collapseMenu" :style="{color:searchTitleContent=='请输入关键字'?'':''}">{{searchTitleContent}}</view>
+				<view class="text-line" v-else @click="collapseMenu" :style="titleStyle">
+					<view :style="{color:searchTitleContent===title?titleColor.nochoseColor: titleColor.chosedColor}">{{searchTitleContent}}</view>
+				</view>
 			</view>
 		</template>
-		
 		
 		<view class="content-wrapper">
 			<view :class="['item-list-box',isMenuOpen?'item-list-show':'item-list-hide']" :style="menuStyle">
@@ -26,7 +27,7 @@
 						<view :key="index" :class="['item-line',item.isChosed?'chosed-item':'']" 
 							:data-choseditem="item" @click.stop.prevent="onChose"
 						>
-							{{item[labelKey]}}
+							{{item[descKey]}}
 						</view>
 				</template> 
 			</view>
@@ -36,22 +37,33 @@
 </template>
 
 <script>
-	import {deepClone,debounce} from '@/lib/lib.js'
+	import {isNotNil,deepClone,debounce,transStringToArr,transArrToString} from '@/lib/lib.js'
 	import apiLib from '@/api/api.js'
 	
 	export default{
 		name:'com-hoc-dropdown-menu', // 下拉框菜单
 		props:{
-			title:{
+			title:{ // 不需要搜索下拉框时候的title
 				type:String,
 				default(){
 					return '下拉选择'
 				}
 			},
-			initValue:{ // 初始选中值
+			iconShow:{ // 下拉箭头icon
+				type:Boolean,
+				default(){
+					return true
+				}
+			},
+			listData:{ // 下拉框初始选项
 				type:Array,
 				default(){
-					return [] // [1,2,3]
+					return []
+				}
+			},
+			initValue:{ // 初始选中值
+				default(){
+					return [] // [1,2,3] or 1,2,3
 				}
 			},
 			isAbleSearch:{ // 是否支持搜索下拉框
@@ -60,7 +72,7 @@
 					return false
 				}
 			},
-			labelKey:{ // label取值字段名
+			labelKey:{ // label取值字段名,选中后显示的值
 				default(){
 					return 'label'
 				}
@@ -70,16 +82,9 @@
 					return 'value'
 				}
 			},
-			listData:{ // 下拉框初始选项
-				require:true,
-				type:Array,
+			descKey:{ // 下拉列表没项显示的值
 				default(){
-					return [
-						{
-							label:'',
-							value:''
-						}
-					]
+					return 'label'
 				}
 			},
 			isMultiple:{ // 是否多选
@@ -90,12 +95,20 @@
 			},
 			titleStyle:{ //标题样式
 				default(){
-					return '--backgroundColor: #fff;'
+					return '--fontSize:24rpx; --backgroundColor: #fff;'
 				}
 			},
 			menuStyle:{ // 下拉菜单样式
 				default(){
 					return '--height:330rpx;--maxHeight:330rpx;--backgroundColor: #fff;'
+				}
+			},
+			titleColor:{ // 选中了值和未选中颜色不同
+				default(){
+					return {
+						chosedColor:'#303133',
+						nochoseColor:'#c0c4cc'
+					}
 				}
 			},
 			axiosRequestApiName:{ // 请求api名称
@@ -113,11 +126,11 @@
 				searchText:'', // 搜索内容
 				isMenuOpen:false, // 控制菜单的开关
 				total:0,
-				status:'loadmore',// 下拉框数据加载 loadmore loading nomore
+				status:'nomore',// 下拉框数据加载 loadmore loading nomore
 				nomoreText:'暂无数据', 
-				titleContent:this.getChosedTitle(this.initValue), // 标题，默认值或选中值，有限选择选中值
-				searchTitleContent:'请输入关键字',
-				chosedArr:deepClone(this.initValue),// 选中值
+				titleContent:this.getChosedTitle(transStringToArr(this.initValue)), // 标题，默认值或选中值，有限选择选中值
+				searchTitleContent:this.getChosedTitle(transStringToArr(this.initValue)),
+				chosedArr:deepClone(transStringToArr(this.initValue)),// 选中值
 				dropdownList:this.calcList(),// 下拉框list
 				onTextChageDebounce:debounce(this.onTextChage)
 			}
@@ -125,10 +138,17 @@
 		methods:{
 			collapseMenu(){
 				this.isMenuOpen = !this.isMenuOpen
+				this.$nextTick(()=>{
+					console.log(this.$refs.searchinput,'searchinput')
+				})
 			},
 			onFocus(){
 				this.isMenuOpen = true
 				console.log('onFocus')
+			},
+			onBlur(){
+				this.isMenuOpen = false
+				console.log('onBlur')
 			},
 			async onTextChage(){
 				const params = {}
@@ -161,8 +181,6 @@
 							...this.dropdownList[ind],
 							isChosed:!this.dropdownList[ind].isChosed
 						})
-						
-						
 					}else{// 单选
 						this.dropdownList.forEach(i=>{
 							if(i[this.valueKey]===choseditem[this.valueKey]){
@@ -181,7 +199,9 @@
 						this.searchText = ''
 					}
 					
-					this.$emit('update:initValue',this.chosedArr)
+					// initValue传的字符串，则emit字符串；initValue传的数组，则emit数组
+					const pushData = typeof this.initValue =='object'?this.chosedArr:transArrToString(this.chosedArr)
+					this.$emit('update:initValue',pushData)
 					this.$emit('getChosedValues',this.chosedArr)
 					
 					this.isMenuOpen = false
@@ -190,7 +210,7 @@
 			
 			calcList(arr){ // 根据listData 和 initValue初始化下拉框选项
 				const list = arr?deepClone(arr):deepClone(this.listData)
-				const compare = arr?this.chosedArr:this.initValue
+				const compare = arr?this.chosedArr:transStringToArr(this.initValue)
 				const res = list.map(i=>{
 					return {
 						...i,
@@ -201,22 +221,21 @@
 			},
 			getChosedTitle(arr=[]){// arr:选中项的value，根据选中值得到label组成的title
 				let res = []
-				this.listData.forEach(i=>{
-					if(arr.includes(i[this.valueKey])){
-						res.push(i[this.labelKey])
-					}
+				arr.forEach(v=>{
+					const item = this.listData.find(i=>i[this.valueKey]==v)
+					item && res.push(item[this.labelKey])
 				})
-				console.log(res,'getChosedTitle')
-				return res.length>0?(res.join(',')): this.title
+				const text = res.join(',')
+				return isNotNil(text)?text:this.title
 			},
 			calcSearchTitleObj(){
 				let res = []
-				this.dropdownList.forEach(i=>{
-					if(this.chosedArr.includes(i[this.valueKey])){
-						res.push(i[this.labelKey])
-					}
+				this.chosedArr.forEach(v=>{
+					const item = this.chosedArr.find(i=>i[this.valueKey]==v)
+					item && res.push(item[this.labelKey])
 				})
-				return res.join(',')
+				const text = res.join(',')
+				return isNotNil(text)?text:this.title
 			}
 		}
 	}
@@ -225,12 +244,13 @@
 <style lang="scss" scoped>
 	.com-hoc-dropdown-menu{
 		position: relative;
-		font-size: 24rpx;
+		// font-size: 24rpx;
 		.dropdown-title-box{
 			display: flex;
 			align-items: center;
 			// padding: 15rpx;
 			background-color: var(--backgroundColor);
+			font-size: var(--fontSize);
 			.title-content{
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -247,7 +267,8 @@
 		.title-input-box{
 			.text-line{
 				color: #303133;
-				// font-size: 30rpx;
+				background-color: var(--backgroundColor);
+				font-size: var(--fontSize);
 			}
 		}
 		.content-wrapper{

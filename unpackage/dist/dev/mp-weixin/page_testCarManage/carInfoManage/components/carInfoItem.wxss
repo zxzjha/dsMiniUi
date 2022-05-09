@@ -30,6 +30,7 @@
   overflow: hidden;
 }
 .page-car-info-item .title--box.data-v-3266f504 {
+  position: relative;
   display: flex;
   align-items: center;
   min-height: 100rpx;
@@ -76,12 +77,20 @@
   transition: all 0.6s ease-out;
   overflow: auto;
 }
+.page-car-info-item .content-box .edit-box.data-v-3266f504 {
+  position: absolute;
+  right: 42rpx;
+}
 .page-car-info-item .content-box .content-line.data-v-3266f504 {
   display: flex;
+  align-items: center;
   margin-bottom: 10rpx;
 }
 .page-car-info-item .content-box .content-line .content-lable-item.data-v-3266f504 {
   min-width: 220rpx;
+}
+.page-car-info-item .content-box .content-line .tool-box.data-v-3266f504 {
+  margin-left: 20rpx;
 }
 .collape-open .title--box.data-v-3266f504 {
   background-color: #93a1ff;
