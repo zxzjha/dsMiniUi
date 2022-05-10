@@ -1,11 +1,11 @@
-import { exFetch,exFetchWithoutToken } from "../index.js"
+import { exFetch,exFetchWithoutToken,exFetchWithoutTokenFormData } from "../index.js"
 import {listToTree,deepClone, isNotNil} from '@/lib/lib.js'
 
 const BaseUrl = 'https://api-njdm-pv.saicmotor.com/adcdataplat'
 
 export const login = async (params={}) => { // 登录
 	try{
-		const res = await exFetchWithoutToken(`${BaseUrl}/sys/sys-management/login/`,params,'POST')
+		const res = await exFetchWithoutTokenFormData(`${BaseUrl}/sys/sys-management/login/`,params,'POST')
 		res.isOk = true
 		return res
 	}catch(err){

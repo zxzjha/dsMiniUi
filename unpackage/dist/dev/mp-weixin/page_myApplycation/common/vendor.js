@@ -1,8 +1,8 @@
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["page_myApplycation/common/vendor"],{235:
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["page_myApplycation/common/vendor"],{227:
 /*!*******************************************************************************************!*\
   !*** /Users/zhangxinzhen/zxz/code/code-2021/uniapp/dsMiniUi2/page_myApplycation/const.js ***!
   \*******************************************************************************************/
-/*! no static exports found */function(p,o,e){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),o.applicationList=void 0;var r=[{id:"application-1",title:"借车申请",path:"/page_myApplycation/subPages/carBorrowApplication/carBorrowOrderList/carBorrowOrderList"}];o.applicationList=r},252:
+/*! no static exports found */function(p,o,e){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),o.applicationList=void 0;var r=[{id:"application-1",title:"借车申请",path:"/page_myApplycation/subPages/carBorrowApplication/carBorrowOrderList/carBorrowOrderList"}];o.applicationList=r},244:
 /*!**********************************************************************************************************************************************!*\
   !*** /Users/zhangxinzhen/zxz/code/code-2021/uniapp/dsMiniUi2/page_myApplycation/subPages/carBorrowApplication/carBorrowOrderDetail/const.js ***!
   \**********************************************************************************************************************************************/

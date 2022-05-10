@@ -139,8 +139,16 @@ const COM_HEADER = {
 		saicid:100441,
 		apikey:'7SSmMcZNJb7TRYFbWSKZQUTJnC8nI6eC',
 		openid:store.state.baseStore.openid,
-		// "Content-Type": "application/x-www-form-urlencoded",
 		"Content-Type": "application/json; charset=UTF-8;",
+	}
+}
+
+const FORM_DATA_COM_HEADER={
+	header: {
+		saicid:100441,
+		apikey:'7SSmMcZNJb7TRYFbWSKZQUTJnC8nI6eC',
+		openid:store.state.baseStore.openid,
+		"Content-Type": "application/x-www-form-urlencoded",
 	}
 }
 
@@ -159,6 +167,12 @@ const COM_HEADER = {
 // ---- 请求不带token ----
 	export const exFetchWithoutToken = new Request({...COM_HEADER}, false).exFetch
 	
+	// ---- 请求带token,-----formData -------
+	export const exFetchFormData = new Request({...FORM_DATA_COM_HEADER},true).exFetch
+	
+	// ---- 请求不带token, -----formData ----
+		export const exFetchWithoutTokenFormData = new Request({...FORM_DATA_COM_HEADER}, false).exFetch
+		
  // ============================= 地 图 相 关 接 口 =================================
  
 const MAP_HEADER = {

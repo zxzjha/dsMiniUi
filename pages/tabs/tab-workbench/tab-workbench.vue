@@ -13,12 +13,12 @@
 	import {mapState} from 'vuex'
 	import { arrChunk } from '@/lib/lib.js'
 	import apiLib from '@/api/api.js'
-	// import {iconList} from './const.js'
+	import {defautList} from './const.js'
 	
 	export default {
 		data() {
 			return {
-				list:[],
+				list:[], // 菜单图标列表
 				share:{
 					title:'智驾数据服务平台',
 					path:'/pages/index/index',
@@ -35,7 +35,8 @@
 			})
 		},
 		onReady() {
-			this.list = arrChunk(this.authWorkbenchNavList,4)
+			const arr = this.authWorkbenchNavList && this.authWorkbenchNavList.length>0?this.authWorkbenchNavList: defautList
+			this.list = arrChunk(arr,4)
 			this.getProjectList()
 		},
 		methods: {

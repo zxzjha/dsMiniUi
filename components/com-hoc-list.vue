@@ -128,6 +128,7 @@
 				this.loadStatus = this.tableData.length>=this.total?'nomore':'loadmore'
 			},
 			refreshData(){ // 刷新数据
+				console.log('refresh-------')
 				this.tableData=[]
 				this.total=0
 				this.pageNum=0

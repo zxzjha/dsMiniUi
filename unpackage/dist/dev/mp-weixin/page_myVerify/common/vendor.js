@@ -1,8 +1,8 @@
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["page_myVerify/common/vendor"],{261:
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["page_myVerify/common/vendor"],{253:
 /*!**************************************************************************************!*\
   !*** /Users/zhangxinzhen/zxz/code/code-2021/uniapp/dsMiniUi2/page_myVerify/const.js ***!
   \**************************************************************************************/
-/*! no static exports found */function(e,r,o){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.verifyList=void 0;var p=[{id:"verify-1",title:"借车审核",path:"/page_myVerify/subPages/carBorrowVerify/carBorrowVerifyList/carBorrowVerifyList"}];r.verifyList=p},278:
+/*! no static exports found */function(e,r,o){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.verifyList=void 0;var p=[{id:"verify-1",title:"借车审核",path:"/page_myVerify/subPages/carBorrowVerify/carBorrowVerifyList/carBorrowVerifyList"}];r.verifyList=p},270:
 /*!*************************************************************************************************************************************!*\
   !*** /Users/zhangxinzhen/zxz/code/code-2021/uniapp/dsMiniUi2/page_myVerify/subPages/carBorrowVerify/carBorrowVerifyDetail/const.js ***!
   \*************************************************************************************************************************************/

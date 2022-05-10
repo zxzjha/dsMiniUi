@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "测试车总览",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "com-hoc-touchbox": "/components/com-hoc-touchbox"
-  }
-}

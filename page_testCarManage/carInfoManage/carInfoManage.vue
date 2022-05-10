@@ -22,7 +22,7 @@
 				<template v-slot:content>
 					<view class="list-wrapper">
 						<view v-for="(item,index) in tableData" :id="item.id" :key="item.id">
-							<car-info-item :initialData="item" :itemId="index+1" :key="item.id" @edit="onEdit"></car-info-item>
+							<car-info-item :initialData="item" :itemId="index+1" :key="item.id" @edit="onEdit" @refreshCarinfoList="onSearch"></car-info-item>
 						</view>
 					</view>
 				</template>

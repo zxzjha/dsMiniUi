@@ -12,12 +12,10 @@
         "enhance": true,
         "preloadBackgroundData": false,
         "coverView": true,
-        "autoAudits": false,
         "showShadowRootInWxmlPanel": true,
-        "uglifyFileName": false,
+        "uglifyFileName": true,
         "checkInvalidKey": true,
         "uploadWithSourceMap": true,
-        "lazyloadPlaceholderEnable": false,
         "useMultiFrameRuntime": true,
         "babelSetting": {
             "ignore": [],
@@ -30,7 +28,8 @@
         "showES6CompileOption": false,
         "disableUseStrict": false,
         "useStaticServer": true,
-        "useCompilerPlugins": false
+        "useCompilerPlugins": false,
+        "minifyWXML": true
     },
     "compileType": "miniprogram",
     "libVersion": "2.24.1",

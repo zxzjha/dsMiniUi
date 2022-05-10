@@ -6,7 +6,7 @@
 				<view class="item-center-title">{{itemId}}. {{initialData.vin || ''}}</view>
 				<view class="item-center-content">
 					<view class="item">{{initialData.vehicleProjectDesc}}</view>
-					<view class="item" v-if="!initialData.licenseNumber&&initialData.licenseNumber!=='无'">{{initialData.licenseNumber}}</view>
+					<view class="item" v-if="initialData.licenseNumber&&initialData.licenseNumber!=='无'">{{initialData.licenseNumber}}</view>
 				</view>
 			</view>
 			<view class="item-right" @click="changeCollapse">
@@ -28,7 +28,7 @@
 			</view>
 		</view>
 		
-		<u-modal v-if="authModalShow" :show="authModalShow" :showConfirmButton="false" :closeOnClickOverlay="true"
+		<u-modal v-if="authModalShow" :show="authModalShow" :showConfirmButton="false" :closeOnClickOverlay="false"
 			title="配置借车权限" @close="closeAuthModal"
 		>
 			<view class="setting-auth-modal-wrapper" style="width: 100%; display: flex; justify-content: center;">
@@ -79,7 +79,6 @@
 				this.$emit('edit',this.initialData)
 			},
 			async onSwitchChange(e){ // 是否开放借出按钮,true:开放借出,false:停止借出
-				console.log(e,'onSwitchChange')
 				this.isSwitchLoading = true
 				const successText = e?'开放借出成功！':'停止借出成功！'
 				const failText = e?'开放借出失败，请稍后再试！':'停止借出失败，请稍后再试！'
@@ -94,7 +93,6 @@
 				this.isSwitchLoading=false
 			},
 			async subAuthSetting(form){ // 提交权限配置表单
-				console.log(form,'subAuthSetting')
 				await this.onSubmitForm(form,'配置车辆权限成功！','配置车辆权限失败，请稍后再试！')
 				
 				this.$refs.authcom.endLoading()
@@ -118,7 +116,7 @@
 				isNotNil(isOpening) && (params.isOpening=isOpening)
 				
 				const res = await apiLib.updateVehicleInfoList(params,'POST',{errMessage:errMessage, hasErrMessage:true})
-				console.log(res,'33333333333333333',params,isOpening)
+		
 				if(res.isOk){ // 表单提交成功，主页面刷新数据
 					this.$emit('refreshCarinfoList')
 					return true

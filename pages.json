@@ -54,19 +54,19 @@
 				}
 			]
 		},
-		{
-			"root": "page_testCarOverview", // 测试车总览
-			"pages":[
-				{
-					"path" : "testCarOverview/testCarOverview",
-					"style" :                                                                                    
-					{
-						"navigationBarTitleText": "测试车总览", 
-						"enablePullDownRefresh": false
-					}
-				}
-			]
-		},
+		// {
+		// 	"root": "page_testCarOverview", // 测试车总览
+		// 	"pages":[
+		// 		{
+		// 			"path" : "testCarOverview/testCarOverview",
+		// 			"style" :                                                                                    
+		// 			{
+		// 				"navigationBarTitleText": "测试车总览", 
+		// 				"enablePullDownRefresh": false
+		// 			}
+		// 		}
+		// 	]
+		// },
 		{
 			"root": "page_carBorrow", // 借车
 			"pages":[
@@ -170,7 +170,7 @@
 			"packages": ["page_myVerify"]
 		}
 	},
-	// "lazyCodeLoading": "requiredComponents",
+	"lazyCodeLoading": "requiredComponents",
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "智驾数据服务平台",

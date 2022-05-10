@@ -4,7 +4,7 @@
 			<u--form :model="formData" ref="form">
 				<u-form-item label="VIN" prop="vin" :labelWidth="130" borderBottom>
 					<u--input v-model="formData.vin" placeholder="请输入VIN" border="none" 
-						:disabled="Object.keys(initialData).length>=1" disabledColor="#ffffff"
+						:disabled="Object.keys(initialData).length>=1" disabledColor="#e2e2e2"
 					></u--input>
 				</u-form-item>
 				<u-form-item label="管理编码" prop="governingCode" :labelWidth="130" borderBottom>
@@ -311,7 +311,6 @@
 				}
 			},
 			onSubmit(){
-				console.log(this.formData,'this.formDatathis.formDatathis.formData')
 				this.$refs.form.validate().then(async valid=>{
 					if(valid){
 						this.isBtnLoading = true
@@ -331,9 +330,9 @@
 							params.createUser = this.formData.createUser && this.formData.createUser.id?this.formData.createUser.id:''
 							params.lastModifyUser = this.formData.lastModifyUser && this.formData.lastModifyUser.id?this.formData.lastModifyUser.id:''
 						}
-						console.log(params,'===pppppppp')
+						
 						const res = await apiLib.updateVehicleInfoList(params,'POST',{errMessage:`车辆${text}失败，请稍后再试！`, hasErrMessage:true})
-						console.log(res,'editcarinfo')
+						
 						if(res.isOk){ // 表单提交成功，主页面刷新数据
 							// uni.$u.toast(`车辆${text}成功!`)
 							this.$emit('refreshCarinfoList')

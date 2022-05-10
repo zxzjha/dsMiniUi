@@ -138,22 +138,17 @@
 		methods:{
 			collapseMenu(){
 				this.isMenuOpen = !this.isMenuOpen
-				this.$nextTick(()=>{
-					console.log(this.$refs.searchinput,'searchinput')
-				})
 			},
 			onFocus(){
 				this.isMenuOpen = true
-				console.log('onFocus')
 			},
 			onBlur(){
 				this.isMenuOpen = false
-				console.log('onBlur')
 			},
 			async onTextChage(){
 				const params = {}
 				params[`${this.axiosParamKeyName}`] = this.searchText
-				console.log(params,'params')
+				
 				this.status = 'loading'
 				const res = await apiLib[this.axiosRequestApiName](params)
 				if(res.isOk){
@@ -165,10 +160,6 @@
 				const len = this.dropdownList.length
 				this.status = len>0?(len>=this.total?'nomore':'loadmore'):('nomore')
 				this.nomoreText = len>0?'全部加载完成':'暂无数据'
-				
-				// this.status = this.dropdownList.length>=this.total?'nomore':'loadmore'
-				
-				console.log(res,'onTextChage',this.dropdownList,this.isMenuOpen)
 			},
 			onChose(e){ // 选中或取消选中
 				if(e){
@@ -198,7 +189,7 @@
 						this.searchTitleContent = this.calcSearchTitleObj()
 						this.searchText = ''
 					}
-					console.log(this.searchTitleContent,'this.searchTitleContent')
+
 					// initValue传的字符串，则emit字符串；initValue传的数组，则emit数组
 					const pushData = typeof this.initValue =='object'?this.chosedArr:transArrToString(this.chosedArr)
 					this.$emit('update:initValue',pushData)
@@ -234,7 +225,7 @@
 					const item = this.dropdownList.find(i=>i[this.valueKey]==v)
 					item && res.push(item[this.labelKey])
 				})
-				console.log(this.chosedArr,res,'---ooooooo')
+				
 				const text = res.join(',')
 				return isNotNil(text)?text:this.title
 			}

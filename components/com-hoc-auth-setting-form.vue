@@ -46,7 +46,6 @@
 			})
 		},
 		async mounted() {
-			console.log('mounted---com-hoc-auth-setting-form')
 		},
 		onReady() {
 			// 如果需要兼容微信小程序，并且校验规则中含有方法等，只能通过setRules方法设置规则
@@ -79,8 +78,6 @@
 							...this.formData,
 							authorizedUser:this.formData.authorizedUser.filter(i=>typeof i == 'number')
 						}
-						
-						console.log(this.formData,'=======params=====')
 						
 						this.isBtnLoading = true
 						this.$emit('onSubmit',params)
