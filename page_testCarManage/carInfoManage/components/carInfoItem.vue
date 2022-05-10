@@ -6,7 +6,7 @@
 				<view class="item-center-title">{{itemId}}. {{initialData.vin || ''}}</view>
 				<view class="item-center-content">
 					<view class="item">{{initialData.vehicleProjectDesc}}</view>
-					<view class="item" v-if="initialData.licenseNumber&&initialData.licenseNumber!=='无'">{{initialData.licenseNumber}}</view>
+					<view class="item" v-if="!initialData.licenseNumber&&initialData.licenseNumber!=='无'">{{initialData.licenseNumber}}</view>
 				</view>
 			</view>
 			<view class="item-right" @click="changeCollapse">
@@ -14,7 +14,7 @@
 			</view>
 		</view>
 		<view :class="['content-box',initialData.isOpening?'blue-theme-content':'grey-theme-content']">
-			<view class="edit-box" v-if="isOpen" @click="onEdit"><u-icon name="edit-pen-fill" size="24" color="#4c65e2"></u-icon></view>
+			<view :class="['edit-box',isOpen?'show-edit-box':'hide-edit-box']" @click="onEdit"><u-icon name="edit-pen-fill" size="24" color="#4c65e2"></u-icon></view>
 			<view class="content-line" v-for="(item,ind) in carInfoColumns" :id="ind" :key="ind">
 				<view class="content-lable-item">{{item.label}}：</view>
 				<view class="content-value-item">{{initialData[item.prop]}}</view>
@@ -22,7 +22,7 @@
 					<u-switch v-if="item.prop=='isOpeningDesc'" v-model="isOpening" size="12" asyncChange
 						:loading="isSwitchLoading" activeColor="#4c65e2" @change="onSwitchChange"></u-switch>
 					<view class="auth-tool" v-if="item.prop=='isPublicDesc'" @click="onAuthSetting">
-						<u-icon name="setting-fill" size="14" color="#4c65e2"></u-icon>
+						<u-icon name="setting-fill" size="15" color="#4c65e2"></u-icon>
 					</view>
 				</view>
 			</view>
@@ -79,6 +79,7 @@
 				this.$emit('edit',this.initialData)
 			},
 			async onSwitchChange(e){ // 是否开放借出按钮,true:开放借出,false:停止借出
+				console.log(e,'onSwitchChange')
 				this.isSwitchLoading = true
 				const successText = e?'开放借出成功！':'停止借出成功！'
 				const failText = e?'开放借出失败，请稍后再试！':'停止借出失败，请稍后再试！'
@@ -97,6 +98,7 @@
 				await this.onSubmitForm(form,'配置车辆权限成功！','配置车辆权限失败，请稍后再试！')
 				
 				this.$refs.authcom.endLoading()
+				this.closeAuthModal()
 			},
 			onAuthSetting(){ // 打开配置权限弹窗
 				this.authModalShow = true
@@ -118,6 +120,7 @@
 				const res = await apiLib.updateVehicleInfoList(params,'POST',{errMessage:errMessage, hasErrMessage:true})
 				console.log(res,'33333333333333333',params,isOpening)
 				if(res.isOk){ // 表单提交成功，主页面刷新数据
+					this.$emit('refreshCarinfoList')
 					return true
 				}else{
 					return false
@@ -180,7 +183,19 @@
 			overflow: auto;
 			.edit-box{
 				position: absolute;
-				right: 42rpx;
+				right: 30rpx;
+				padding: 12rpx;
+				border-radius: 50%;
+				background: #fff;
+				box-shadow: inset 0px 4px 4px #a0a0a073;
+				opacity: 0;
+				transition: opacity 0.2s ease-out 0.6s;
+			}
+			.show-edit-box{
+				opacity: 1;
+			}
+			.hide-edit-box{
+				transition: opacity 0.6s ease-out;
 			}
 			.content-line{
 				display: flex;

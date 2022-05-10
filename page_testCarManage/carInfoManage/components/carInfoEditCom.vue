@@ -119,7 +119,7 @@
 			<u-button @click="onSubmit" :loading="isBtnLoading" :disabled="isBtnLoading" color="#423bb3" text="确定" shape="circle" customStyle="margin:10rpx 20rpx;"></u-button>
 		</view>
 		
-		<u-datetime-picker v-if="timePickerShow" :show="timePickerShow" mode="date"
+		<u-datetime-picker v-if="timePickerShow" :show="timePickerShow" mode="datetime"
 			:value="Number(new Date())"
 			@confirm="conformTime"
 			@cancel="datetimePickerClose"
@@ -331,7 +331,7 @@
 							params.createUser = this.formData.createUser && this.formData.createUser.id?this.formData.createUser.id:''
 							params.lastModifyUser = this.formData.lastModifyUser && this.formData.lastModifyUser.id?this.formData.lastModifyUser.id:''
 						}
-						
+						console.log(params,'===pppppppp')
 						const res = await apiLib.updateVehicleInfoList(params,'POST',{errMessage:`车辆${text}失败，请稍后再试！`, hasErrMessage:true})
 						console.log(res,'editcarinfo')
 						if(res.isOk){ // 表单提交成功，主页面刷新数据
@@ -357,7 +357,8 @@
 				this.timePickerShow = true
 			},
 			conformTime(e){ // 确认选择时间
-				this.formData[this.curTimePickerValName] = moment(e.value).format('YYYY-MM-DD')
+			// yyyy-MM-dd'T'HH:mm:ss.SSSSSSz   YYYY-MM-DD HH:mm:ss
+				this.formData[this.curTimePickerValName] = moment(e.value).format("YYYY-MM-DD HH:mm:ss")
 				this.datetimePickerClose()
 			},
 			datetimePickerClose(){ // 关闭时间选择器

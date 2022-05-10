@@ -25,7 +25,7 @@ export const getPublicKey = async (params={}) => { // 获取公钥
 		}
 	}catch(err){
 		err.isOk=false
-		console.log(err)
+		console.log(err,'getPublicKey')
 		return err
 	}
 }

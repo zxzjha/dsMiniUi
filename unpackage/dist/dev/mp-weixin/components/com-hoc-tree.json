@@ -1,6 +1,6 @@
 {
+  "component": true,
   "usingComponents": {
     "com-hoc-tree-node": "/components/com-hoc-tree-node"
-  },
-  "component": true
+  }
 }

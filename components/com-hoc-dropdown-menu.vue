@@ -198,7 +198,7 @@
 						this.searchTitleContent = this.calcSearchTitleObj()
 						this.searchText = ''
 					}
-					
+					console.log(this.searchTitleContent,'this.searchTitleContent')
 					// initValue传的字符串，则emit字符串；initValue传的数组，则emit数组
 					const pushData = typeof this.initValue =='object'?this.chosedArr:transArrToString(this.chosedArr)
 					this.$emit('update:initValue',pushData)
@@ -231,9 +231,10 @@
 			calcSearchTitleObj(){
 				let res = []
 				this.chosedArr.forEach(v=>{
-					const item = this.chosedArr.find(i=>i[this.valueKey]==v)
+					const item = this.dropdownList.find(i=>i[this.valueKey]==v)
 					item && res.push(item[this.labelKey])
 				})
+				console.log(this.chosedArr,res,'---ooooooo')
 				const text = res.join(',')
 				return isNotNil(text)?text:this.title
 			}

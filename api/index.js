@@ -139,7 +139,8 @@ const COM_HEADER = {
 		saicid:100441,
 		apikey:'7SSmMcZNJb7TRYFbWSKZQUTJnC8nI6eC',
 		openid:store.state.baseStore.openid,
-		"Content-Type": "application/x-www-form-urlencoded",
+		// "Content-Type": "application/x-www-form-urlencoded",
+		"Content-Type": "application/json; charset=UTF-8;",
 	}
 }
 

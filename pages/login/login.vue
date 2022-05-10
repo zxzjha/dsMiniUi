@@ -147,7 +147,8 @@
 					this.toHome()
 				}else{
 					const {data} = res || {data:{}}
-					uni.$u.toast(data.message || '登录失败，请稍后再试！')
+					const text = isNotNil(data.message)?data.message:'登录失败，请稍后再试！'
+					uni.$u.toast(text)
 				}
 				
 				this.isBtnLoading = false

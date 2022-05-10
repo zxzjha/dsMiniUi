@@ -80,6 +80,9 @@
 				return list && list.length>0
 			}
 		},
+		mounted() {
+			this.initOpenFolder()
+		},
 		methods:{
 			onToggle(){ // 打开或关闭节点
 				if(this.isFolder) {
@@ -149,6 +152,25 @@
 				}
 				
 				return isInCheckedarr
+			},
+			initOpenFolder(){ // 根据初始时候选中的值来判断当前节点是否打开，有子节点被选中则打开
+				if(this.isFolder) {
+					let childIds = []
+					
+					if(this.treeData[this.propKeys.children] && this.treeData[this.propKeys.children].length>0){
+						childIds = this.treeData[this.propKeys.children].map(i=>i[this.propKeys.id])
+					}
+					
+					if(childIds.length>0){
+						// 初始化的时候判断是否有子节点被选中,有则打开节点
+						const isIn = childIds.some(i=>{
+							const index = this.defaultValue.findIndex(j=>j==i)
+							return isNotNil(index) && index>=0
+						})
+						
+						isIn && (this.isOpen = true)
+					}
+				}
 			}
 		}
 	}
