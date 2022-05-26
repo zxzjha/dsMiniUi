@@ -144,6 +144,7 @@
 					this.$store.dispatch('baseStore/updateOpenid',data.openid)
 					this.$store.dispatch('baseStore/updateUserInfo',data.userInfo)
 					this.$store.dispatch('baseStore/updateAuthResourceLib',data.resources)
+					this.getProjectList()
 					this.toHome()
 				}else{
 					const {data} = res || {data:{}}
@@ -170,6 +171,10 @@
 			},
 			updateImageCode() { // 刷新校验码
 			  this.gVerify.refresh()
+			},
+			async getProjectList(){
+				const projectList = await apiLib.getVehicleProject()
+				projectList && projectList.length>0 && this.$store.dispatch('baseStore/updateProjectList',projectList)
 			}
 		}
 	}

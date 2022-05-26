@@ -282,7 +282,9 @@
 		},
 		onReady() {
 			// 如果需要兼容微信小程序，并且校验规则中含有方法等，只能通过setRules方法设置规则
-			this.$refs.form.setRules(this.rules)
+			this.$nextTick(()=>{
+				this.$refs.form.setRules(this.rules)
+			})
 		},
 		methods:{
 			initData(){

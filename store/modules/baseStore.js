@@ -67,7 +67,6 @@ var actions = {
 			return isAuthed
 		})
 		
-		console.log(navList,'updateAuthResourceLib---navList')
 		context.commit('SET_AUTH_RESOURCE_LIB', authResourceLib)  // 存储资源总列表
 		context.commit('SET_AUTH_WORKBENCH_NAV_LIST', navList)  // 存储工作台能访问的列表
 		
@@ -103,7 +102,7 @@ var mutations = {
 		state.authResourceLib = authResourceLib
 		uni.setStorageSync('authResourceLib', JSON.stringify(authResourceLib))
 	},
-	SET_AUTH_WORKBENCH_NAV_LIST:(state, authWorkbenchNavList)=>{
+	SET_AUTH_WORKBENCH_NAV_LIST:(state, authWorkbenchNavList)=>{ // 用户在工作台能进的入口
 		state.authWorkbenchNavList = authWorkbenchNavList
 		uni.setStorageSync('authWorkbenchNavList', JSON.stringify(authWorkbenchNavList))
 	},

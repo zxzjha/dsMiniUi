@@ -6,13 +6,13 @@
 				<view class="icon-title">{{item.title}}</view>
 			</view>
 		</view>
+		<!-- <view @click="ontest">toDayuxing</view> -->
 	</view>
 </template>
 
 <script>
 	import {mapState} from 'vuex'
 	import { arrChunk } from '@/lib/lib.js'
-	import apiLib from '@/api/api.js'
 	import {defautList} from './const.js'
 	
 	export default {
@@ -34,21 +34,28 @@
 				authWorkbenchNavList: state => state.baseStore.authWorkbenchNavList,
 			})
 		},
-		onReady() {
+		onShow() {
 			const arr = this.authWorkbenchNavList && this.authWorkbenchNavList.length>0?this.authWorkbenchNavList: defautList
 			this.list = arrChunk(arr,4)
-			this.getProjectList()
 		},
 		methods: {
-			async getProjectList(){
-				const projectList = await apiLib.getVehicleProject()
-				projectList && projectList.length>0 && this.$store.dispatch('baseStore/updateProjectList',projectList)
-			},
 			onGoto(path){
-				console.log(path,'ongoto')
 				uni.navigateTo({
 				    url: path
 				});
+			},
+			ontest(){
+				uni.navigateToMiniProgram({
+				  appId: 'wx6649cb85ca15d7b6',
+				  // path: 'pages/index/index?id=123',
+				  // extraData: {
+				  //   'data1': 'test'
+				  // },
+				  success(res) {
+						console.log(res,'success')
+				    // 打开成功
+				  }
+				})
 			}
 		}
 	}

@@ -5,7 +5,7 @@
     <view class="touchbox-content" :style="customStyle" @click.stop.prevent>
       <view class="touch-line-box">
         <view class="touch-line"></view>
-				{{top}} -  {{distance}}
+				<!-- {{top}} -  {{distance}} -->
       </view>
       <slot></slot>
     </view>

@@ -214,8 +214,8 @@
 			border-radius: 36rpx 36rpx 0 0;
 		}
 		.content-box{
-			height: 330rpx;
-			max-height: 330rpx;
+			height: 360rpx;
+			max-height: 360rpx;
 			margin:0 0;
 			padding: 20rpx 30rpx;
 			border-radius: 0 0 36rpx 36rpx;

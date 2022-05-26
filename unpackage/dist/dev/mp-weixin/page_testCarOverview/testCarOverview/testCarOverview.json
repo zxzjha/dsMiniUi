@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "测试车总览",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "com-hoc-touchbox": "/components/com-hoc-touchbox",
+    "qiun-data-charts": "/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts"
+  }
+}

@@ -76,8 +76,8 @@ export class Request {
 						if(code===200){
 							resolve(res.data)
 						}else{
-							const dMessage = (data.data || {}).message
-							const text = dMessage || data.message || errException.errMessage
+							const dMessage = (data?.data || {}).message
+							const text = dMessage || data?.message || errException.errMessage
 							errException.hasErrMessage && isNotNil(text) && uni.$u.toast(text)
 							
 							reject(res.data)

@@ -13,7 +13,7 @@
         "preloadBackgroundData": false,
         "coverView": true,
         "showShadowRootInWxmlPanel": true,
-        "uglifyFileName": true,
+        "uglifyFileName": false,
         "checkInvalidKey": true,
         "uploadWithSourceMap": true,
         "useMultiFrameRuntime": true,
@@ -28,8 +28,7 @@
         "showES6CompileOption": false,
         "disableUseStrict": false,
         "useStaticServer": true,
-        "useCompilerPlugins": false,
-        "minifyWXML": true
+        "useCompilerPlugins": false
     },
     "compileType": "miniprogram",
     "libVersion": "2.24.1",

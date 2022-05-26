@@ -12,12 +12,12 @@ export const iconList = [ // 没设authCodeArr则表示不需要权限
 		authCodeArr:['carinfomanage'],
 		path:'/page_testCarManage/carInfoManage/carInfoManage',
 	},
-	// {
-	// 	iconClass:'t-icon-64 t-icon-guiji', // 测试车总览
-	// 	title:'测试车总览',
-	// 	authCodeArr:['carinfomanage'],
-	// 	path:'/page_testCarOverview/testCarOverview/testCarOverview'
-	// }
+	{
+		iconClass:'t-icon-64 t-icon-guiji', // 测试车总览
+		title:'测试车总览',
+		authCodeArr:['carinfomanage'],
+		path:'/page_testCarOverview/testCarOverview/testCarOverview'
+	}
 ]
 
 export const defautList=[ // 如果本地获取不到list，这个备用

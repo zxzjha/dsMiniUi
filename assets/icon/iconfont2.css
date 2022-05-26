@@ -1,0 +1,49 @@
+@font-face {
+  font-family: "custom-icon"; /* Project id 3247764 */
+	src: url('https://at.alicdn.com/t/font_3247764_wyljxduqrna.ttf?t=1647612719743') format('truetype');
+}
+
+.custom-icon {
+  font-family: "custom-icon" !important;
+  font-size: 32rpx;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.custom-icon-xiangyoujiaohuan:before {
+  content: "\e8f9";
+}
+
+.custom-icon-jieshushijian:before {
+  content: "\e61c";
+}
+
+.custom-icon-kaishishijian:before {
+  content: "\e61d";
+}
+
+.custom-icon-gengduo:before {
+  content: "\e614";
+}
+
+.custom-icon-tuichudenglu:before {
+  content: "\e632";
+}
+
+.custom-icon-s-promotion:before {
+  content: "\e679";
+}
+
+.custom-icon-xiangzuo:before {
+  content: "\e600";
+}
+
+.custom-icon-xiangyou:before {
+  content: "\e626";
+}
+
+
+
+
+
