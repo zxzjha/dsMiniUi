@@ -25,6 +25,7 @@
 				@change="changeHandler"
 			>
 				<picker-view-column
+					@click.stop.prevent
 					v-for="(item, index) in innerColumns"
 					:key="index"
 					class="u-picker__view__column"

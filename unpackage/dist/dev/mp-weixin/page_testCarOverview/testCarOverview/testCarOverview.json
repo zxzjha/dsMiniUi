@@ -2,7 +2,12 @@
   "navigationBarTitleText": "测试车总览",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "qiun-data-charts": "/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts",
     "com-hoc-touchbox": "/components/com-hoc-touchbox",
-    "qiun-data-charts": "/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts"
+    "u--input": "/uni_modules/uview-ui/components/u--input/u--input",
+    "u-button": "/uni_modules/uview-ui/components/u-button/u-button",
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
+    "u-datetime-picker": "/uni_modules/uview-ui/components/u-datetime-picker/u-datetime-picker",
+    "overview-chart-com": "/page_testCarOverview/testCarOverview/components/overviewChartCom"
   }
 }

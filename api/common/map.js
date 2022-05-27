@@ -142,35 +142,69 @@ export const getTDataDayRes = async(params={})=>{ // 将获取的日统计接口
 			// 过滤出有值的数据
 			const list = (res.data||[]).filter(i=>!i.remark)
 			
-			// 过滤出里程有值的,统计一个月中每天的总里程
-			const distanceObj = calcSum(list,'sumdrivedistance','行驶里程')
+			const resData = {} // jieguo
+			const cateArr = [] // 横坐标
 			
-			// 过滤出时长有值的,统计一个月中每天的驾驶时长 sumdrivetime
-			const sumdrivetimeObj = calcSum(list,'sumdrivetime','驾驶时长',true)
+			list.forEach((item)=>{
+				cateArr.push(item.day)
+				const distancce = item['sumdrivedistance'] || 0
+				const drivetime = item['sumdrivetime']?(item['sumdrivetime']/3600): 0
+				const speedgreater10 = item['speedgreater10time']?(item['speedgreater10time']/3600): 0
+				const speedgreater80 = item['speedgreater80time']?(item['speedgreater80time']/3600): 0
+				
+				if(!resData[item.day]){
+					resData[item.day] = {
+						sumdrivedistance:0,
+						sumdrivetime:0,
+						speedgreater10time:0,
+						speedgreater80time:0
+					}
+				}
+				
+				resData[item.day]['sumdrivedistance']+=distancce
+				resData[item.day]['sumdrivetime']+=drivetime
+				resData[item.day]['speedgreater10time']+=speedgreater10
+				resData[item.day]['speedgreater80time']+=speedgreater80
+			})
 			
-			// 过滤出时长有值的,统计一个月中每天的速度大于等于10的时长
-			const speedgreater10timeObj = calcSum(list,'speedgreater10time','每天的速度大于等于10的时长',true)
+			const categories = uniqArr(cateArr)
 			
-			// 过滤出时长有值的,统计一个月中每天的速度大于等于80的时长
-			const speedgreater80timeObj = calcSum(list,'speedgreater80time','每天的速度大于等于80的时长',true)
-			// let res = {
-			// 	categories: ["2016","2017","2018","2019","2020","2021"],
-			// 	series: [
-			// 		{
-			// 			name: "目标值",
-			// 			data: [35,36,31,33,13,34]
-			// 		},
-			// 		{
-			// 			name: "完成量",
-			// 			data: [18,27,21,24,6,28]
-			// 		}
-			// 	]
-			// };
 			chartData={
-				distanceObj,
-				sumdrivetimeObj,
-				speedgreater10timeObj,
-				speedgreater80timeObj
+				distancceObj:{ // 所有车辆驾驶总里程总览
+					categories,
+					series:[
+						{
+							name: '所有车辆驾驶总里程',
+							color:"#6970e2",
+							data: categories.map(i=>(resData[i]['sumdrivedistance']).toFixed(2))
+						}
+					]
+				},
+				drivetimeObj:{ // 所有车辆驾驶总时长总览
+					categories,
+					series:[
+						{
+							name: '所有车辆驾驶总时长',
+							color:"#6970e2",
+							data: categories.map(i=>(resData[i]['sumdrivetime']).toFixed(2))
+						}
+					]
+				},
+				speedgreaterObj:{ // 所有车辆驾不同驶速度的时长分布统计
+					categories,
+					series:[
+						{
+							name: '速度大于等于10的总时长',
+							color:"#6970e2",
+							data: categories.map(i=>(resData[i]['speedgreater10time']).toFixed(2))
+						},
+						{
+							name: '速度大于等于80的时长',
+							color:"#9A60B4",
+							data: categories.map(i=>(resData[i]['speedgreater80time']).toFixed(2))
+						}
+					]
+				}
 			}
 		}
 		
