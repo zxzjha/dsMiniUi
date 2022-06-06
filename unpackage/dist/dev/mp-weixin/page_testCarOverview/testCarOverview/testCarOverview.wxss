@@ -62,34 +62,6 @@
 .page-test-car-overview .touch-box-wrapper .touch-wrapper.data-v-7128c49e {
   margin-top: 20rpx;
 }
-.page-test-car-overview .touch-box-wrapper .time-pick-box.data-v-7128c49e {
-  display: flex;
-  padding: 20rpx 40rpx;
-  margin: 20rpx 30rpx 40rpx 30rpx;
-  border-radius: 20rpx;
-  background: linear-gradient(45deg, #c1c3f5, #a7beec);
-  box-shadow: 0px 3px 11px 1px #d9dcd8;
-}
-.page-test-car-overview .touch-box-wrapper .time-pick-box .left-box.data-v-7128c49e {
-  flex: 1;
-}
-.page-test-car-overview .touch-box-wrapper .time-pick-box .left-box .time-pick-item.data-v-7128c49e {
-  display: flex;
-}
-.page-test-car-overview .touch-box-wrapper .time-pick-box .left-box .time-pick-item.data-v-7128c49e:nth-child(1) {
-  margin-bottom: 20rpx;
-}
-.page-test-car-overview .touch-box-wrapper .time-pick-box .left-box .time-pick-item .label-item.data-v-7128c49e {
-  width: 145rpx;
-  min-width: 145rpx;
-  margin-right: 20rpx;
-  letter-spacing: 2rpx;
-}
-.page-test-car-overview .touch-box-wrapper .time-pick-box .right-box.data-v-7128c49e {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 @charset "UTF-8";
 /* uni.scss */

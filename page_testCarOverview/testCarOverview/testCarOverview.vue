@@ -26,28 +26,6 @@
 			@click.stop.prevent
 		>
 			<view class="touch-wrapper" @click.stop.prevent>
-				<!-- <view class="time-pick-box">
-					<view class="left-box">
-						<view class="time-pick-item">
-							<view class="label-item">开始时间</view>
-							<view class="pick-item" @click="openTimePicker('starttime')">
-								<u--input v-model="tDataParam.starttime" disabled disabledColor="transparent" placeholder="选择日期" border="none"></u--input>
-							</view>
-						</view>
-						<view class="time-pick-item">
-							<view class="label-item">结束时间</view>
-							<view class="pick-item" @click="openTimePicker('endtime')">
-								<u--input v-model="tDataParam.endtime" disabled disabledColor="transparent" placeholder="选择日期" border="none"></u--input>
-							</view>
-						</view>
-					</view>
-					<view class="right-box">
-						<u-button type="primary" shape="circle" color="transparent" loadingMode="circle" :loading="isSearchBtnLoading" @click="onSearchChartData">
-							<u-icon name="search" color="#6970e2" size="38"></u-icon>
-						</u-button>
-					</view>
-				</view> -->
-				
 				<time-picker-com
 					ref="overviewtimepicker"
 					startKey="starttime"
@@ -378,34 +356,6 @@
 		.touch-box-wrapper{
 			.touch-wrapper{
 				margin-top:20rpx;
-			}
-			.time-pick-box{
-				display: flex;
-				padding: 20rpx 40rpx;
-				margin: 20rpx 30rpx 40rpx 30rpx;
-				border-radius: 20rpx;
-				background: linear-gradient(45deg, #c1c3f5, #a7beec);
-				box-shadow: 0px 3px 11px 1px #d9dcd8;
-				.left-box{
-					flex: 1;
-					.time-pick-item{
-						display: flex;
-						&:nth-child(1){
-							margin-bottom: 20rpx;;
-						}
-						.label-item{
-							width: 145rpx;
-							min-width: 145rpx;
-							margin-right: 20rpx;
-							letter-spacing: 2rpx;
-						}
-					}
-				}
-				.right-box{
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
 			}
 		}
 	}
