@@ -2,7 +2,7 @@
 	<view class="page-index">
 		<view class="title-line">
 			<view class="logo"></view>
-			<view class="title-text">欢迎来到智驾数据服务平台</view>
+			<view class="title-text">欢迎来到数据核</view>
 		</view>
 	</view>
 </template>

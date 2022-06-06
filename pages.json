@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "智驾数据服务平台",
+				"navigationBarTitleText": "数据核",
 				"enablePullDownRefresh": false,
 				"navigationStyle":"custom"
 			}
@@ -20,21 +20,21 @@
 			// {
 			// 	"path" : "pages/tabs/tab-home/tab-home",
 			// 	"style" : {
-			// 		"navigationBarTitleText": "智驾数据服务平台",
+			// 		"navigationBarTitleText": "数据核",
 			// 		"enablePullDownRefresh": false
 			// 	}
 			// },
 		{
 			"path" : "pages/tabs/tab-workbench/tab-workbench",
 			"style" : {
-				"navigationBarTitleText": "智驾数据服务平台",
+				"navigationBarTitleText": "数据核",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path" : "pages/tabs/tab-personal/tab-personal",
 			"style" : {
-				"navigationBarTitleText": "智驾数据服务平台",
+				"navigationBarTitleText": "数据核",
 				"enablePullDownRefresh": false,
 					"navigationStyle":"custom"
 			}
@@ -55,13 +55,21 @@
 			]
 		},
 		{
-			"root": "page_testCarOverview", // 测试车总览
+			"root": "page_testCarOverview", // 车辆总览
 			"pages":[
 				{
 					"path" : "testCarOverview/testCarOverview",
 					"style" :                                                                                    
 					{
-						"navigationBarTitleText": "测试车总览", 
+						"navigationBarTitleText": "车辆总览", 
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path" : "testCarOverview/subPages/perCarInfo/perCarInfo",
+					"style" :                                                                                    
+					{
+						"navigationBarTitleText": "单车详情", 
 						"enablePullDownRefresh": false
 					}
 				}
@@ -173,7 +181,7 @@
 	"lazyCodeLoading": "requiredComponents",
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "智驾数据服务平台",
+		"navigationBarTitleText": "数据核",
 		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#ffffff" //#ffffff #F8F8F8
 	},

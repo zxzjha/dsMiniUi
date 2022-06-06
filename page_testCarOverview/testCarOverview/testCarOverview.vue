@@ -6,9 +6,9 @@
 				@regionchange="debounceRegionchange" @updated="updated" @markertap="onMarkerTap"
 			>
 				<view class="car-arcbar-box" style="width:120rpx;height:120rpx;">
-					<qiun-data-charts type="arcbar" :canvas2d="true" canvasId="canvasColumn1"
+					<qiun-data-charts type="arcbar" :canvas2d="true" canvasId="circleDataColumn1"
 					:disableScroll="true" :chartData="circleData" :opts="arcbaropts"
-					@complete="totalItemShow=true"
+					@complete="totalItemShow=true" :loadingType="0"
 					></qiun-data-charts>
 					<view v-if="totalItemShow" class="total-item">共 {{total||'--'}} 辆</view>
 					<view v-if="totalItemShow" class="change-marker-box">
@@ -22,13 +22,11 @@
 		
 		<com-hoc-touchbox class="touch-box-wrapper" v-if="touchboxShow" ref="touchBox" :disable="isTouchDisable" 
 			customStyle="padding-top:15rpx;margin: 0 10rpx;border-radius:10px 10px 0 0;"
-			:initTop="initTop" minTop="100" maxTop="100"
-			@get-end-detail="getEndDetail"
-			@get-move-detail="getMoveDetail"
+			:initTop="initTop" minTop="100" maxTop="100" @get-end-detail="getEndDetail"
 			@click.stop.prevent
 		>
 			<view class="touch-wrapper" @click.stop.prevent>
-				<view class="time-pick-box">
+				<!-- <view class="time-pick-box">
 					<view class="left-box">
 						<view class="time-pick-item">
 							<view class="label-item">开始时间</view>
@@ -48,45 +46,27 @@
 							<u-icon name="search" color="#6970e2" size="38"></u-icon>
 						</u-button>
 					</view>
-				</view>
+				</view> -->
+				
+				<time-picker-com
+					ref="overviewtimepicker"
+					startKey="starttime"
+					endKey="endtime"
+					pickerMode="date"
+					:initParam="tDataParam"
+					:hasProject="false"
+					@onConfirm="onSearch"
+				></time-picker-com>
 				
 				<scroll-view :scroll-y="isScrollY" :style="{height:`${windowHeight-220}px`}">
-					<!-- <overview-chart-com
+					<overview-chart-com
+						id="overview"
+						ref="overviewchartcom"
+						:chartNumArr="chartNumArr"
 						:distanceChartData="distanceChartData"
 						:drivetimeChartData="drivetimeChartData"
 						:speedgreaterChartData="speedgreaterChartData"
-					></overview-chart-com> -->
-					<view class="chart-wrapper">
-						<view class="chart-item-box">
-							<view class="chart-title">车辆驾驶里程总览<text class="unit-item">( Km )</text>
-							</view>
-							<view class="chart-content">
-								<qiun-data-charts type="area" :canvas2d="true" canvasId="canvasColumn3" :ontouch="true"
-									:disableScroll="true" :inScrollView="true" :chartData="distanceChartData" :opts="distanceopts"
-								></qiun-data-charts>
-							</view>
-						</view>
-						
-						<view class="chart-item-box">
-							<view class="chart-title">车辆驾驶时长总览<text class="unit-item">( h )</text>
-							</view>
-							<view class="chart-content">
-								<qiun-data-charts type="column" :canvas2d="true" canvasId="canvasColumn2" :ontouch="true"
-									:disableScroll="true" :inScrollView="true" :chartData="drivetimeChartData" :opts="columopts"
-								></qiun-data-charts>
-							</view>
-						</view>
-						
-						<view class="chart-item-box">
-							<view class="chart-title">不同速度的时长分布<text class="unit-item">( h )</text>
-							</view>
-							<view class="chart-content">
-								<qiun-data-charts type="area" :canvas2d="true" canvasId="canvasColumn5" :ontouch="true"
-									:disableScroll="true" :inScrollView="true" :chartData="speedgreaterChartData" :opts="speedgreateropts"
-								></qiun-data-charts>
-							</view>
-						</view>
-					</view>
+					></overview-chart-com>
 				</scroll-view>
 				
 				<u-datetime-picker v-if="timePickerShow" :show="timePickerShow" mode="date"
@@ -108,18 +88,19 @@
 	import {debounce,deepClone} from '@/lib/lib.js'
 	import {ChartOptsManager} from '@/lib/chartOpts/chartOpts.js'
 	import {MapMannager} from './tool.js'
-	// import overviewChartCom from './components/overviewChartCom.vue'
+	import overviewChartCom from './components/overviewChartCom.vue'
+	import timePickerCom from './components/timepickCom.vue'
 	
 	let MAP_CTX = null // 地图对象
 	let Marker_List = [] // marker列表
 	let Real_Time_Data_List = [] // 实时数据列表，所有车
 	let curTimePickerName='' //starttime,endtime
-	const te = 'teeee'
 	
 	export default {
 		name:'test-car-overview',
 		components:{
-			'overview-chart-com':overviewChartCom
+			'overview-chart-com':overviewChartCom,
+			'time-picker-com':timePickerCom
 		},
 		data(){
 			return {
@@ -136,7 +117,8 @@
 				total:201, // 车辆总数
 				onLineNum:0, // 在线车辆数
 				curMarkerType:'all', // 当前显示的是在线车辆还是离线还是全部车辆图标 'all','zaixixan','lixian'
-				circleData:{ series: [{data: null}] }, // 在线车辆百分比
+				circleData:{}, // 在线车辆百分比
+				chartNumArr:[], // 数据统计大数字c
 				distanceChartData:{categories: [], series: [{data:[]}]}, //所有车辆驾驶总里程总览
 				drivetimeChartData:{categories: [], series: [{data:[]}]}, //所有车辆驾驶总时长总览
 				speedgreaterChartData:{categories: [], series: [{data:[]}]}, //所有车辆驾不同驶速度的时长分布统计
@@ -192,89 +174,27 @@
 				const res = await apiLib.getRealTimeDataAll()
 				if(res.isOk){
 					this.total = res.total
-					
 					this.onLineNum = res.onLineNum
-					
-					const cData = {
-						series: [
-							{
-								name: "在线",
-								data: percent
-							}
-						]
-					}
 					const percent = this.onLineNum/this.total
-					this.circleData = cData
+					const cData = { series: [ { name: "在线", data: percent } ] }
 					
 					this.arcbaropts = ChartOptsManager.getArcbarOpts({titleVal:this.onLineNum,subtitleVal:'在线',radius:80})
+					this.circleData = cData
 					
 					Real_Time_Data_List = deepClone(res.data)
 				}
-				// accstate: null
-				// altitude: 66
-				// angle: 217
-				// d: null
-				// dbtime: "2021-12-24T15:32:43.33"
-				// gnsscount: null
-				// isdriving: null
-				// isonline: false
-				// isposition: true
-				// lat: 30.489986
-				// lon: 114.50309
-				// mileage: 2.2
-				// positiontime: "2021-12-24T15:32:42"
-				// speed: 0
-				// terminalcode: "53810829755"
-				// traveltime: "2021-12-24T15:32:42"
 			},
 			async getTDataDayRes(){ //获取日统计接口
-				// const params={
-				// 	starttime:'2022-04-30',
-				// 	endtime:'2022-05-30'
-				// }
 				const res = await apiLib.getTDataDayRes(this.tDataParam)
 				
 				if(res.isOk){
 					this.distanceChartData = res.chartData.distancceObj
 					this.drivetimeChartData = res.chartData.drivetimeObj
 					this.speedgreaterChartData = res.chartData.speedgreaterObj
+					
+					this.chartNumArr = res.chartNumArr
+					console.log(this.chartNumArr,'overview----chartNumArr')
 				}
-				console.log(res,'===getTDataDayRes===获取日统计接口getTDataDayRes',res)
-				
-				// autodrivingdistance: 0
-				// autodrivingtime: 0
-				// carid: "128842061468581888"
-				// carno: "3810816791"
-				// createBy: "admin"
-				// createTime: "2022-05-01 01:00:06"
-				// day: "2022-04-30"
-				// delFlag: "0"
-				// ecusaveragespeed: 0
-				// ecusaveragespeedhavezero: 0
-				// ecusmaxspeed: 0
-				// ecusumdrivedistance: 0
-				// endlat: 40.168266
-				// endlon: 117.153198
-				// endtime: null
-				// gpsaveragespeed: 38.18
-				// gpsaveragespeedhavezero: 7.92
-				// gpsmaxspeed: 116.5
-				// id: "191747782086148096"
-				// manualdrivingdistance: 0
-				// manualdrivingtime: 0
-				// oil: 0
-				// params: {UserCarPermission: "", TenantPermission: ""}
-				// remark: ""
-				// speedgreater10time: 7602
-				// speedgreater80time: 135
-				// startime: null
-				// startlat: 40.144205
-				// startlon: 117.090541
-				// sumdrivedistance: 96
-				// sumdrivetime: 43997
-				// terminalcode: "53810816791"
-				// updateBy: ""
-				// updateTime: null
 			},
 			async getHisdataslice(){ // 查询历史数据切片接口
 				const params={
@@ -282,19 +202,6 @@
 					endtime:'2022-05-10 12:00:00',
 				}
 				const res = await apiLib.getHisdataslice(params)
-				console.log(res,'===getHisdataslice===查询历史数据切片接口')
-				// createBy: null
-				// createTime: "2022-05-01 12:06:56"
-				// endtime: "2022-05-01 12:06:53"
-				// id: "191915597078380544"
-				// params: {UserCarPermission: "", TenantPermission: ""}
-				// remark: null
-				// starttime: "2022-05-01 12:01:30"
-				// sumMileage: 0.09999999999999432
-				// sumTime: "323"
-				// terminalcode: "53810827241"
-				// updateBy: null
-				// updateTime: null
 			},
 			resetLoc(e){ // 地图复位
 				console.log(e,'returnLoc复位')
@@ -341,6 +248,20 @@
 				await this.getTDataDayRes()
 				this.isSearchBtnLoading = false
 				console.log('onSearchChartData')
+			},
+			async onSearch(timeObj){
+				this.tDataParam = {
+					...this.tDataParam,
+					starttime:timeObj.starttime,
+					endtime:timeObj.endtime,
+					project:timeObj.project || ''
+				}
+				
+				await this.getTDataDayRes()
+				
+				this.$refs.overviewtimepicker.stopLoading()
+				
+				console.log(timeObj,'timeObj',this.tDataParam)
 			},
 			updated(e){ // 在地图渲染更新完成时触发
 				this.touchboxShow = true
@@ -392,16 +313,20 @@
 				else this.isScrollY = false
 				console.log(minTop,maxTop,curTop,'----getEndDetail----')
 			},
-			getMoveDetail({ // 上拉滑动框滑动结束时
-				minTop,
-				maxTop,
-				curTop
-			}){// 上拉滑动框滑动结束进行时
-				console.log(minTop,maxTop,curTop,'------getMoveDetail------')
-			},
-			onMarkerTap(e){
+			onMarkerTap(e){ // 点击车辆图标
 				const item = Marker_List.find(i=>i.id==e.markerId)
-				console.log(e,'------onMarkerTap------',item)
+				item && this.toPerCarInfo(item)
+				
+				console.log(item,'=======itemitemitem=======')
+			},
+			toPerCarInfo(e){ // 去单车详情页
+				uni.navigateTo({
+					url: '/page_testCarOverview/testCarOverview/subPages/perCarInfo/perCarInfo',
+					success(res,self) {
+						// 跳转成功后,向目标页面传送数据
+						res.eventChannel.emit('pushInitData',{terminalcode:e?.infoItem?.terminalcode||''})
+					}
+				});
 			},
 			onChangeTouchDisable() { // 控制touchbox是否可以滑动
 				this.isTouchDisable = !this.isTouchDisable
@@ -453,34 +378,11 @@
 		.touch-box-wrapper{
 			.touch-wrapper{
 				margin-top:20rpx;
-				.chart-wrapper{
-					padding: 20rpx 0;
-					.chart-item-box{
-						.chart-title{
-							padding-left: 45rpx;
-							padding-bottom: 20rpx;
-							margin-bottom: 20rpx;
-							height: 60rpx;
-							line-height: 60rpx;
-							font-size: 40rpx;
-							font-weight: bold;
-							color: #333;
-							.unit-item{
-								padding-left: 20rpx;
-								font-size: 32rpx;
-							}
-						}
-						.chart-content{
-							min-height:200rpx;
-							margin-bottom: 60rpx;
-						}
-					}
-				}
 			}
 			.time-pick-box{
 				display: flex;
 				padding: 20rpx 40rpx;
-				margin: 20rpx 30rpx 40rpx 20rpx;
+				margin: 20rpx 30rpx 40rpx 30rpx;
 				border-radius: 20rpx;
 				background: linear-gradient(45deg, #c1c3f5, #a7beec);
 				box-shadow: 0px 3px 11px 1px #d9dcd8;
@@ -496,9 +398,6 @@
 							min-width: 145rpx;
 							margin-right: 20rpx;
 							letter-spacing: 2rpx;
-						}
-						.pick-item{
-							
 						}
 					}
 				}

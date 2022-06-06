@@ -8,7 +8,7 @@
 					></com-hoc-dropdown-menu>
 				</view>
 				<view class="input-box">
-					<u--input v-model="extraParams.project" clearable border="none" placeholder="请输入内容"
+					<u--input v-model="extraParams.searchText" clearable border="none" placeholder="请输入内容"
 						customStyle="box-sizing: border-box"
 					></u--input>
 				</view>
@@ -22,7 +22,9 @@
 				<template v-slot:content>
 					<view class="list-wrapper">
 						<view v-for="(item,index) in tableData" :id="item.id" :key="item.id">
-							<car-info-item :initialData="item" :itemId="index+1" :key="item.id" @edit="onEdit" @refreshCarinfoList="onSearch"></car-info-item>
+							<car-info-item :initialData="item" :itemId="index+1" :key="item.id" 
+								@edit="onEdit" @refreshCarinfoList="onSearch" @toPerCarInfo="toPerCarInfo"
+							></car-info-item>
 						</view>
 					</view>
 				</template>
@@ -96,7 +98,8 @@
 				this.$refs.listcom.refreshData()
 			},
 			getChosedValues(chosedArr){
-				this.extraParams.searchText = chosedArr.join(',')
+				// this.extraParams.searchText = chosedArr.join(',')
+				this.extraParams.project = chosedArr.join(',')
 			},
 			onAdd(){ // 打开弹窗，添加车辆
 				this.formTitle = '添加车辆'
@@ -117,6 +120,15 @@
 			onMove(e){
 				this.moveObj.x = e.detail.x
 				this.moveObj.y = e.detail.y
+			},
+			toPerCarInfo(e){ // 去单车详情页
+				uni.navigateTo({
+					url: '/page_testCarOverview/testCarOverview/subPages/perCarInfo/perCarInfo',
+					success(res,self) {
+						// 跳转成功后,向目标页面传送数据
+						res.eventChannel.emit('pushInitData',{terminalcode:e.monitorID.slice(3,-1)})
+					}
+				});
 			},
 			getListData(data){ // 获取组件com-hoc-list传过来的tableData
 				console.log(data,'getListDatagetListDatagetListDatagetListData')

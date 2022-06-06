@@ -75,7 +75,7 @@
 					}
 				},
 				share:{
-					title:'智驾数据服务平台',
+					title:'数据核',
 					path:'/pages/index/index',
 					imageUrl:'',
 					desc:'',

@@ -77,15 +77,27 @@
   transition: all 0.6s ease-out;
   overflow: auto;
 }
-.page-car-info-item .content-box .edit-box.data-v-3266f504 {
+.page-car-info-item .content-box .func-box.data-v-3266f504 {
   position: absolute;
   right: 30rpx;
   padding: 12rpx;
+  opacity: 0;
+  transition: opacity 0.2s ease-out 0.6s;
+}
+.page-car-info-item .content-box .icon-common-style.data-v-3266f504 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 55rpx;
+  height: 55rpx;
+  margin-bottom: 20rpx;
   border-radius: 50%;
   background: #fff;
   box-shadow: inset 0px 4px 4px #a0a0a073;
-  opacity: 0;
-  transition: opacity 0.2s ease-out 0.6s;
+}
+.page-car-info-item .content-box .icon-ox-style.data-v-3266f504 {
+  font-size: 48rpx;
+  color: #4c65e2;
 }
 .page-car-info-item .content-box .show-edit-box.data-v-3266f504 {
   opacity: 1;

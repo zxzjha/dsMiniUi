@@ -62,31 +62,10 @@
 .page-test-car-overview .touch-box-wrapper .touch-wrapper.data-v-7128c49e {
   margin-top: 20rpx;
 }
-.page-test-car-overview .touch-box-wrapper .touch-wrapper .chart-wrapper.data-v-7128c49e {
-  padding: 20rpx 0;
-}
-.page-test-car-overview .touch-box-wrapper .touch-wrapper .chart-wrapper .chart-item-box .chart-title.data-v-7128c49e {
-  padding-left: 45rpx;
-  padding-bottom: 20rpx;
-  margin-bottom: 20rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  font-size: 40rpx;
-  font-weight: bold;
-  color: #333;
-}
-.page-test-car-overview .touch-box-wrapper .touch-wrapper .chart-wrapper .chart-item-box .chart-title .unit-item.data-v-7128c49e {
-  padding-left: 20rpx;
-  font-size: 32rpx;
-}
-.page-test-car-overview .touch-box-wrapper .touch-wrapper .chart-wrapper .chart-item-box .chart-content.data-v-7128c49e {
-  min-height: 200rpx;
-  margin-bottom: 60rpx;
-}
 .page-test-car-overview .touch-box-wrapper .time-pick-box.data-v-7128c49e {
   display: flex;
   padding: 20rpx 40rpx;
-  margin: 20rpx 30rpx 40rpx 20rpx;
+  margin: 20rpx 30rpx 40rpx 30rpx;
   border-radius: 20rpx;
   background: linear-gradient(45deg, #c1c3f5, #a7beec);
   box-shadow: 0px 3px 11px 1px #d9dcd8;

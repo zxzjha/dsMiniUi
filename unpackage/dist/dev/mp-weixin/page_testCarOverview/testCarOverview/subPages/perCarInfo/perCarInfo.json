@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "单车详情",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "chart-data-com": "/page_testCarOverview/testCarOverview/subPages/perCarInfo/components/chartDataCom",
+    "car-map-com": "/page_testCarOverview/testCarOverview/subPages/perCarInfo/components/carMapCom"
+  }
+}

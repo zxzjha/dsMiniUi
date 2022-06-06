@@ -1,6 +1,6 @@
 <template>
   <view class="com-hoc-touchbox" :class="{touchend:isTouchEnd}" @touchstart="onTouchStart"
-    @touchmove.stop.prevent="onTouchmove" @touchend="onTouchend"
+    @touchmove.stop.prevent="onTouchmove" @touchend="onTouchend" @click.stop.prevent
     :style="{top: top + distance + 'px',zIndex,height:windowHeight+'px'}">
     <view class="touchbox-content" :style="customStyle" @click.stop.prevent>
       <view class="touch-line-box">

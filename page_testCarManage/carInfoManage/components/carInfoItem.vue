@@ -14,7 +14,17 @@
 			</view>
 		</view>
 		<view :class="['content-box',initialData.isOpening?'blue-theme-content':'grey-theme-content']">
-			<view :class="['edit-box',isOpen?'show-edit-box':'hide-edit-box']" @click="onEdit"><u-icon name="edit-pen-fill" size="24" color="#4c65e2"></u-icon></view>
+			<view :class="['func-box',isOpen?'show-edit-box':'hide-edit-box']">
+				<view :class="['icon-common-style']" @click="onEdit">
+					<u-icon name="edit-pen-fill" size="24" color="#4c65e2"></u-icon>
+				</view>
+				<view v-if="initialData.monitorID && initialData.monitorID!=='无'"
+					class="custom-icon icon-common-style icon-ox-style"
+					@click="toPerCarInfo(initialData)"
+				>
+					<text>&#xe770;</text>
+				</view>
+			</view>
 			<view class="content-line" v-for="(item,ind) in carInfoColumns" :id="ind" :key="ind">
 				<view class="content-lable-item">{{item.label}}：</view>
 				<view class="content-value-item">{{initialData[item.prop]}}</view>
@@ -123,6 +133,9 @@
 				}else{
 					return false
 				}
+			},
+			toPerCarInfo(obj){
+				this.$emit('toPerCarInfo',obj)
 			}
 		}
 	}
@@ -179,15 +192,27 @@
 			font-size: 24rpx;
 			transition: all 0.6s ease-out;
 			overflow: auto;
-			.edit-box{
+			.func-box{
 				position: absolute;
 				right: 30rpx;
 				padding: 12rpx;
+				opacity: 0;
+				transition: opacity 0.2s ease-out 0.6s;
+			}
+			.icon-common-style{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 55rpx;
+				height: 55rpx;
+				margin-bottom: 20rpx;
 				border-radius: 50%;
 				background: #fff;
 				box-shadow: inset 0px 4px 4px #a0a0a073;
-				opacity: 0;
-				transition: opacity 0.2s ease-out 0.6s;
+			}
+			.icon-ox-style{
+				font-size: 48rpx;
+				color: #4c65e2;
 			}
 			.show-edit-box{
 				opacity: 1;

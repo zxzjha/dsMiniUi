@@ -1,11 +1,25 @@
 // 车辆监控，第三方接口
 
-import { map_fetch } from "../index.js"
+import { map_fetch,exFetch } from "../index.js"
 import {uniqArr} from '@/lib/lib.js'
 
 const BaseUrl = 'https://tw1-api.icv-cloud.com'
 
+const VehicleBaseUrl = 'https://api-njdm-pv.saicmotor.com/adcdataplat/sys/vehicle-management'
+const calcUrl = (params = {},type='GET',str) => { 
+	const method = type.toUpperCase()
+  const extra = method === 'PUT' ? (isNotNil(params.id) ? params.id : '') : ''
+  return `${VehicleBaseUrl}/${str}/${extra}`
+}
+
 export const getHistoryData = async (params={})=>{ // 1.历史数据查询
+ // {"carid":"111793499350765568",
+ // "sp":10000,"endtime":"2021-09-24 00:00:00",
+ // "begintime":"2021-09-22 00:00:00",
+ // "iscl": 1,
+ // "standards":[],
+ // "fixedColumns":["traveltime","angle","speed","mileage","lat","lon","altitude"]}
+ 
 	try{
 		const res = await map_fetch(`${BaseUrl}/api/history/query`,params,'POST')
 		res.isOk = true
@@ -132,16 +146,43 @@ const calcSum = (data=[],key="",label="",isTime=false)=>{ // list:数据, key:�
 	}
 }
 
+const getSum = (arr=[])=>{ // 获取数据Sum
+	const res = arr.reduce((total, value)=>{
+		return Number(total) + Number(value)
+	},0)
+	console.log(res,'res--===')
+	return res.toFixed(2)
+}
+
 export const getTDataDayRes = async(params={})=>{ // 将获取的日统计接口数据进行整合，得到画图直接能用的数据
 	// params:{terminalcode:'',starttime:'2021-11-24',endtime:'2021-11-25'}
-	// starttime,endtime 必填
+	// starttime,endtime 必填 
+	
+	// 根据项目筛选出车辆列表信息
+	// let vehicleMonitorIDOfProject = [] // 某项目下的所有车辆终端号
+	// if(params.project){
+	// 	const extraParams = {project:params.project||''}
+	// 	const vehicleRes = await exFetch(calcUrl(extraParams, 'GET', 'vehicle-info'), extraParams, 'GET')
+	// 	let carListData =[]
+	// 	if(vehicleRes.code==200){
+	// 		carListData = (vehicleRes.data || {itemList:[]}).itemList
+	// 		carListData.forEach(i=>{
+	// 			if(i.monitorID && i.monitorID.length>3){
+	// 				const monitorID = i.monitorID.slice(3,-1)
+	// 				vehicleMonitorIDOfProject.push(monitorID)
+	// 			}
+	// 		})
+	// 	}
+	// }
+	
 	try{
+		const start = new Date().getTime()
 		const res = await map_fetch(`${BaseUrl}/icv/TDataDay/listDayStatistic`,params,'GET')
 		let chartData = {}
 		if(res.code==200){
 			// 过滤出有值的数据
 			const list = (res.data||[]).filter(i=>!i.remark)
-			
+			// console.log(list,'======list======')
 			const resData = {} // jieguo
 			const cateArr = [] // 横坐标
 			
@@ -161,10 +202,10 @@ export const getTDataDayRes = async(params={})=>{ // 将获取的日统计接口
 					}
 				}
 				
-				resData[item.day]['sumdrivedistance']+=distancce
-				resData[item.day]['sumdrivetime']+=drivetime
-				resData[item.day]['speedgreater10time']+=speedgreater10
-				resData[item.day]['speedgreater80time']+=speedgreater80
+				resData[item.day]['sumdrivedistance'] += distancce
+				resData[item.day]['sumdrivetime'] += drivetime
+				resData[item.day]['speedgreater10time'] += speedgreater10
+				resData[item.day]['speedgreater80time'] += speedgreater80
 			})
 			
 			const categories = uniqArr(cateArr)
@@ -177,6 +218,7 @@ export const getTDataDayRes = async(params={})=>{ // 将获取的日统计接口
 							name: '所有车辆驾驶总里程',
 							color:"#6970e2",
 							data: categories.map(i=>(resData[i]['sumdrivedistance']).toFixed(2))
+							// data: categories.map(i=>(Math.round(resData[i]['sumdrivedistance']) * 100) / 100)
 						}
 					]
 				},
@@ -187,6 +229,7 @@ export const getTDataDayRes = async(params={})=>{ // 将获取的日统计接口
 							name: '所有车辆驾驶总时长',
 							color:"#6970e2",
 							data: categories.map(i=>(resData[i]['sumdrivetime']).toFixed(2))
+							// data: categories.map(i=>(Math.round(resData[i]['sumdrivetime']) * 100) / 100)
 						}
 					]
 				},
@@ -197,19 +240,48 @@ export const getTDataDayRes = async(params={})=>{ // 将获取的日统计接口
 							name: '速度大于等于10的总时长',
 							color:"#6970e2",
 							data: categories.map(i=>(resData[i]['speedgreater10time']).toFixed(2))
+							// data: categories.map(i=>(Math.round(resData[i]['speedgreater10time']) * 100) / 100)
 						},
 						{
 							name: '速度大于等于80的时长',
 							color:"#9A60B4",
 							data: categories.map(i=>(resData[i]['speedgreater80time']).toFixed(2))
+							// data: categories.map(i=>(Math.round(resData[i]['speedgreater80time']) * 100) / 100)
 						}
 					]
 				}
 			}
 		}
-		
+		const end = new Date().getTime()
+		console.log('=================',(end-start)/1000,chartData)
 		return {
 			chartData,
+			chartNumArr:[
+				[
+					{
+						id:'distancceNum',
+						label:'驾驶里程总计 (Km)',
+						value:getSum(chartData.distancceObj.series[0].data) || '--'
+					},
+					{
+						id:'drivetimeNum',
+						label:'驾驶时长总计 (h)',
+						value:getSum(chartData.drivetimeObj.series[0].data) || '--'
+					},
+				],
+				[
+					{
+						id:'speedgreater10timeNum',
+						label:'速度大于10的时长总计 (h)',
+						value:getSum(chartData.speedgreaterObj.series[0].data) || '--'
+					},
+					{
+						id:'speedgreater80timeNum',
+						label:'速度大于80的时长总计 (h)',
+						value:getSum(chartData.speedgreaterObj.series[1].data) || '--'
+					},
+				]
+			],
 			isOk:true
 		}
 	}catch(err){
