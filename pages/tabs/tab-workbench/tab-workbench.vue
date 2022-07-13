@@ -14,7 +14,7 @@
 	import {mapState} from 'vuex'
 	import { arrChunk,isNotNil } from '@/lib/lib.js'
 	import {defautList} from './const.js'
-	
+
 	export default {
 		data() {
 			return {

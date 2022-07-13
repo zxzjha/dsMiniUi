@@ -120,7 +120,7 @@
 			font-size: 34rpx;
 			.tab-item{
 				margin:0 40rpx;
-				transition: all 0.5s ease-in;
+				transition: all 0.3s ease-in;
 			}
 			.active-item{
 				color: #6970e2;

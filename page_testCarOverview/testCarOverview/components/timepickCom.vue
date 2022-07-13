@@ -4,7 +4,7 @@
 			<view class="left-box">
 				<view class="time-pick-item project-box" v-if="hasProject">
 					<view class="label-item">所属项目</view>
-					<com-hoc-dropdown-menu :listData="projectList" :initValue.sync="chosedProject" title="请选择项目" labelKey="project" 
+					<com-hoc-dropdown-menu :listData="projectList" :initValue.sync="chosedProject" title="All" labelKey="project" 
 						titleStyle="--fontSize:28rpx; --backgroundColor: transparent;"
 						:titleColor="{chosedColor:'#303133',nochoseColor:'#303133'}"
 						valueKey="project" descKey="project" @getChosedValues="getChosedValues"
@@ -76,7 +76,7 @@
 			},
 			hasProject:{ // 是否开放项目选择
 				default(){
-					return true
+					return false
 				}
 			},
 		},

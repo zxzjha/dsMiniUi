@@ -100,10 +100,47 @@
 			}
 		},
 		data(){
+			console.log(this.chartNumArr,'chartNumArr----overviewChartCom')
 			return {
+				chartNumData:this.initChartNumArr(),
 				columopts:ChartOptsManager.getColumnOpts(),
 				distanceopts:ChartOptsManager.getAreaOpts(),
 				speedgreateropts:ChartOptsManager.getAreaOpts({showLegend:true}),
+			}
+		},
+		methods:{
+			initChartNumArr(){
+				if(this.chartNumArr.length<=0){
+					const arr = [
+						[   
+							{
+								id:'distancceNum',
+								label:'驾驶里程总计 (Km)',
+								value:'--'
+							},
+							{
+								id:'drivetimeNum',
+								label:'驾驶时长总计 (h)',
+								value:'--'
+							},
+						],
+						[
+							{
+								id:'speedgreater10timeNum',
+								label:'速度大于10的时长总计 (h)',
+								value:'--'
+							},
+							{
+								id:'speedgreater80timeNum',
+								label:'速度大于80的时长总计 (h)',
+								value:'--'
+							}
+						]
+					]
+					return arr
+				}else{
+					return this.chartNumArr
+				}
 			}
 		}
 	}

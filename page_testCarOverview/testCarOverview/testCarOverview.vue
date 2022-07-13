@@ -32,7 +32,7 @@
 					endKey="endtime"
 					pickerMode="date"
 					:initParam="tDataParam"
-					:hasProject="false"
+					:hasProject="true"
 					@onConfirm="onSearch"
 				></time-picker-com>
 				
@@ -90,7 +90,6 @@
 				longitude:'121.4737',
 				touchboxShow:false, // 地图渲染完成后再显示滑动框
 				totalItemShow:false, // 在线车辆进度图加载完成后再显示总车辆
-				isSearchBtnLoading:false, // 搜素表格数据按钮loading
 				timePickerShow:false, // 时间选择器
 				total:201, // 车辆总数
 				onLineNum:0, // 在线车辆数
@@ -220,12 +219,6 @@
 				this.tDataParam[curTimePickerName] = moment(e.value).format('YYYY-MM-DD')
 				this.datetimePickerClose()
 				console.log(e,'------确定选择时间--------',this.tDataParam[curTimePickerName])
-			},
-			async onSearchChartData(){ // 根据时间段更新图表数据
-				this.isSearchBtnLoading = true
-				await this.getTDataDayRes()
-				this.isSearchBtnLoading = false
-				console.log('onSearchChartData')
 			},
 			async onSearch(timeObj){
 				this.tDataParam = {

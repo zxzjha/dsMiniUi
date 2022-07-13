@@ -2,7 +2,7 @@
 	<view class="page-login">
 		<view class="title-line">
 			<view class="logo"></view>
-			<view class="title-text">智驾数据服务平台</view>
+			<view class="title-text">数据核</view>
 		</view>
 		<view class="form-wrapper">
 			<u--form :model="formData" ref="uForm" :rules="rules">

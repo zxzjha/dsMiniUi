@@ -1,7 +1,7 @@
 {
-  "component": true,
   "usingComponents": {
     "overview-chart-com": "/page_testCarOverview/testCarOverview/components/overviewChartCom",
     "time-picker-com": "/page_testCarOverview/testCarOverview/components/timepickCom"
-  }
+  },
+  "component": true
 }

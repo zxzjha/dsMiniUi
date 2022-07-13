@@ -159,30 +159,36 @@ export const getTDataDayRes = async(params={})=>{ // 将获取的日统计接口
 	// starttime,endtime 必填 
 	
 	// 根据项目筛选出车辆列表信息
-	// let vehicleMonitorIDOfProject = [] // 某项目下的所有车辆终端号
-	// if(params.project){
-	// 	const extraParams = {project:params.project||''}
-	// 	const vehicleRes = await exFetch(calcUrl(extraParams, 'GET', 'vehicle-info'), extraParams, 'GET')
-	// 	let carListData =[]
-	// 	if(vehicleRes.code==200){
-	// 		carListData = (vehicleRes.data || {itemList:[]}).itemList
-	// 		carListData.forEach(i=>{
-	// 			if(i.monitorID && i.monitorID.length>3){
-	// 				const monitorID = i.monitorID.slice(3,-1)
-	// 				vehicleMonitorIDOfProject.push(monitorID)
-	// 			}
-	// 		})
-	// 	}
-	// }
+	let vehicleMonitorIDOfProject = [] // 某项目下的所有车辆终端号
+	if(params.project){
+		const extraParams = {project:params.project||''}
+		const vehicleRes = await exFetch(calcUrl(extraParams, 'GET', 'vehicle-info'), extraParams, 'GET')
+		if(vehicleRes.code==200){
+			const carListData = (vehicleRes.data || {itemList:[]}).itemList
+			carListData.forEach(i=>{
+				if(i.monitorID && i.monitorID.length>3){
+					const monitorID = i.monitorID.slice(3,-1)
+					vehicleMonitorIDOfProject.push(monitorID)
+				}
+			})
+		}
+	}
 	
 	try{
 		const start = new Date().getTime()
 		const res = await map_fetch(`${BaseUrl}/icv/TDataDay/listDayStatistic`,params,'GET')
 		let chartData = {}
 		if(res.code==200){
-			// 过滤出有值的数据
-			const list = (res.data||[]).filter(i=>!i.remark)
-			// console.log(list,'======list======')
+			// 过滤出有值的数据,并且支持根据项目筛选
+			const list = (res.data||[]).filter(i=>{
+				if(vehicleMonitorIDOfProject.length>0){
+					const ind = vehicleMonitorIDOfProject.findIndex(m => m==i.terminalcode)
+					return ind>=0 && !i.remark
+				}else{
+					return !i.remark
+				}
+			})
+			
 			const resData = {} // jieguo
 			const cateArr = [] // 横坐标
 			

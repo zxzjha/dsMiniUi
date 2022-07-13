@@ -1,5 +1,4 @@
 {
-  "component": true,
   "usingComponents": {
     "u--form": "/uni_modules/uview-ui/components/u--form/u--form",
     "u-form-item": "/uni_modules/uview-ui/components/u-form-item/u-form-item",
@@ -7,5 +6,6 @@
     "com-hoc-dropdown-menu": "/components/com-hoc-dropdown-menu",
     "u-button": "/uni_modules/uview-ui/components/u-button/u-button",
     "u-datetime-picker": "/uni_modules/uview-ui/components/u-datetime-picker/u-datetime-picker"
-  }
+  },
+  "component": true
 }
